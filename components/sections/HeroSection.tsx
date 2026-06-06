@@ -3,32 +3,13 @@
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import Button from '@/components/ui/Button';
-import { CanvasFractalGrid } from '@/components/ui/CanvasFractalGrid';
-
-// oklch(74% 0.17 200) ≈ rgba(30, 210, 255) — accent-cyan de Orquesta
-const ORQUESTA_CYAN = 'rgba(30, 210, 255, 1)';
 
 export default function HeroSection() {
   const t = useTranslations('hero');
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
-      {/* Fondo reactivo al mouse: CanvasFractalGrid de cult-ui */}
-      <CanvasFractalGrid
-        dotColor={ORQUESTA_CYAN}
-        glowColor={ORQUESTA_CYAN}
-        dotSize={3}
-        dotSpacing={28}
-        dotOpacity={0.35}
-        waveIntensity={22}
-        waveRadius={200}
-        enableGradient={false}
-        enableNoise={false}
-        enableMouseGlow={true}
-        initialPerformance="high"
-      />
-
-      {/* Glow radial estático sobre el grid */}
+      {/* Glow radial estático sobre el grid global */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden
