@@ -10,7 +10,7 @@ import { useTranslations } from 'next-intl';
 import FadeIn from '@/components/animations/FadeIn';
 import Button from '@/components/ui/Button';
 
-// ── useMediaQuery (de cult-ui three-d-carousel) ────────────────
+// ── useMediaQuery ────────────────────────────────────────────
 const IS_SERVER = typeof window === 'undefined';
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
@@ -27,21 +27,20 @@ function useMediaQuery(query: string, { defaultValue = false, initializeWithValu
   return matches;
 }
 
-// ── Tipos y datos de Orquesta ──────────────────────────────────
+// ── Tipos y datos ──────────────────────────────────────────────
 type ServiceKey = 'mostrador' | 'bots' | 'llamadas' | 'recepcion' | 'turnos';
 
 const SERVICE_KEYS: ServiceKey[] = ['mostrador', 'bots', 'llamadas', 'recepcion', 'turnos'];
 
 const SERVICE_COLORS: Record<ServiceKey, string> = {
-  mostrador: 'rgba(30, 210, 255, 1)',   // oklch(72% 0.16 200)
-  bots:      'rgba(130, 90, 255, 1)',    // oklch(70% 0.15 280)
-  llamadas:  'rgba(60, 220, 130, 1)',    // oklch(75% 0.17 145)
-  recepcion: 'rgba(255, 130, 60, 1)',    // oklch(73% 0.16 25)
-  turnos:    'rgba(220, 60, 220, 1)',    // oklch(74% 0.15 320)
+  mostrador: 'rgba(30, 210, 255, 1)',
+  bots:      'rgba(130, 90, 255, 1)',
+  llamadas:  'rgba(60, 220, 130, 1)',
+  recepcion: 'rgba(255, 130, 60, 1)',
+  turnos:    'rgba(220, 60, 220, 1)',
 };
 
-// ── TextureCard (de cult-ui) — adaptado dark mode ──────────────
-// Fuente original usa gradientes claros; aquí invertimos para dark background
+// ── TextureFrame ───────────────────────────────────────────────
 function TextureFrame({
   children,
   color,
@@ -56,7 +55,6 @@ function TextureFrame({
   const bgAlpha = color.replace('1)', '0.04)');
 
   return (
-    // Capa exterior: marco (TextureCard outer)
     <div
       className="relative w-full h-full overflow-hidden"
       style={{
@@ -71,11 +69,8 @@ function TextureFrame({
         transition: 'box-shadow 0.4s ease, background 0.4s ease',
       }}
     >
-      {/* Capa 1 (TextureCard nested border 1) */}
       <div style={{ borderRadius: 10, border: `1px solid ${borderAlpha}`, height: '100%' }}>
-        {/* Capa 2 */}
         <div style={{ borderRadius: 9, border: `1px solid ${borderFaint}`, height: '100%' }}>
-          {/* Capa 3 — interior matte */}
           <div
             style={{
               borderRadius: 8,
@@ -89,12 +84,13 @@ function TextureFrame({
         </div>
       </div>
 
-      {/* Tornillos de esquina — detalle TextureCard */}
-      {[[3,3],[isActive?196:185,3],[3,isActive?376:285],[isActive?196:185,isActive?376:285]].map(([x,y],i) => (
+      {/* Tornillos de esquina — coordenadas fijas relativas al padding de 7px */}
+      {[{ l: 3, t: 3 }, { r: 3, t: 3 }, { l: 3, b: 3 }, { r: 3, b: 3 }].map((pos, i) => (
         <div key={i}
           className="absolute w-1.5 h-1.5 rounded-full"
           style={{
-            left: x, top: y,
+            ...(pos.l !== undefined ? { left: pos.l } : { right: (pos as { r: number; t?: number; b?: number }).r }),
+            ...('t' in pos && pos.t !== undefined ? { top: pos.t } : { bottom: (pos as { l?: number; r?: number; b: number }).b }),
             background: isActive ? 'oklch(30% 0.015 50)' : 'oklch(22% 0.01 260)',
           }}
         />
@@ -150,23 +146,18 @@ function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
   );
 }
 
-// ── Service card face (dentro del carrusel) ────────────────────
+// ── Service card face ──────────────────────────────────────────
 function ServiceFaceCard({
   id, color, name, number, tagline,
 }: { id: ServiceKey; color: string; name: string; number: string; tagline: string }) {
   return (
     <div className="w-full h-full flex flex-col">
-      {/* Área de artwork */}
       <div className="flex-1 flex items-center justify-center p-5 pt-6">
         <div style={{ width: '100%', height: 90 }}>
           <ServiceArtwork id={id} color={color} />
         </div>
       </div>
-
-      {/* Divider */}
       <div className="mx-4 h-px" style={{ background: color.replace('1)', '0.15)') }} />
-
-      {/* Info */}
       <div className="p-4 pb-5">
         <div className="flex items-baseline gap-2 mb-1">
           <span className="font-mono text-[10px]" style={{ color: color.replace('1)', '0.65)') }}>{number}</span>
@@ -183,23 +174,25 @@ function ServiceFaceCard({
   );
 }
 
-// ── Carousel cilíndrico (de cult-ui three-d-carousel) ─────────
+// ── Carousel cilíndrico ────────────────────────────────────────
 const TRANSITION = { duration: 0.15, ease: [0.32, 0.72, 0, 1] as const };
 const TRANSITION_OVERLAY = { duration: 0.5, ease: [0.32, 0.72, 0, 1] as const };
 
-const Carousel = memo(({
-  handleClick,
-  controls,
-  services,
-  isCarouselActive,
-  t,
-}: {
-  handleClick: (id: ServiceKey) => void;
-  controls: ReturnType<typeof useAnimation>;
-  services: ServiceKey[];
-  isCarouselActive: boolean;
-  t: ReturnType<typeof useTranslations>;
-}) => {
+const Carousel = memo((
+  {
+    handleClick,
+    controls,
+    services,
+    isCarouselActive,
+    t,
+  }: {
+    handleClick: (id: ServiceKey) => void;
+    controls: ReturnType<typeof useAnimation>;
+    services: ServiceKey[];
+    isCarouselActive: boolean;
+    t: ReturnType<typeof useTranslations>;
+  }
+) => {
   const isSmall = useMediaQuery('(max-width: 640px)');
   const cylinderWidth = isSmall ? 1000 : 1700;
   const faceCount = services.length;
@@ -217,10 +210,15 @@ const Carousel = memo(({
         drag={isCarouselActive ? 'x' : false}
         className="relative flex h-full origin-center cursor-grab justify-center active:cursor-grabbing"
         style={{ transform, rotateY: rotation, width: cylinderWidth, transformStyle: 'preserve-3d' }}
-        onDrag={(_, info) => isCarouselActive && rotation.set(rotation.get() + info.offset.x * 0.05)}
+        // FIX: usar info.delta.x (delta por frame) en lugar de info.offset.x (acumulativo)
+        onDrag={(_, info) =>
+          isCarouselActive && rotation.set(rotation.get() + info.delta.x * 0.3)
+        }
+        // FIX: velocidad reducida 0.05 → 0.015 para inercia natural
         onDragEnd={(_, info) =>
-          isCarouselActive && controls.start({
-            rotateY: rotation.get() + info.velocity.x * 0.05,
+          isCarouselActive &&
+          controls.start({
+            rotateY: rotation.get() + info.velocity.x * 0.015,
             transition: { type: 'spring', stiffness: 100, damping: 30, mass: 0.1 },
           })
         }
@@ -242,7 +240,6 @@ const Carousel = memo(({
               }}
               onClick={() => handleClick(id)}
             >
-              {/* TextureFrame envolviendo la card de servicio */}
               <motion.div
                 layoutId={`service-card-${id}`}
                 className="w-full cursor-pointer"
@@ -265,7 +262,7 @@ const Carousel = memo(({
 });
 Carousel.displayName = 'Carousel';
 
-// ── Overlay expandido (service detail) ────────────────────────
+// ── Overlay expandido ──────────────────────────────────────────
 function ServiceOverlay({
   id, onClose, t,
 }: { id: ServiceKey; onClose: () => void; t: ReturnType<typeof useTranslations> }) {
@@ -292,7 +289,6 @@ function ServiceOverlay({
     >
       <TextureFrame color={color} isActive={true}>
         <div className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
-          {/* Header */}
           <div className="flex items-start justify-between p-6 pb-4 border-b"
             style={{ borderColor: color.replace('1)', '0.12)') }}>
             <div>
@@ -303,13 +299,12 @@ function ServiceOverlay({
               <p className="text-sm" style={{ color: color.replace('1)', '0.85)') }}>{tagline}</p>
             </div>
             <button onClick={onClose}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors flex-shrink-0"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors flex-shrink-0 cursor-pointer"
               style={{ background: 'oklch(14% 0.01 260)' }}>
               ×
             </button>
           </div>
 
-          {/* Artwork */}
           <div className="p-6 pb-0">
             <div className="rounded-lg flex items-center justify-center mb-6"
               style={{ height: 110, background: color.replace('1)', '0.06)'), border: `1px solid ${color.replace('1)', '0.15)')}` }}>
@@ -319,7 +314,6 @@ function ServiceOverlay({
             </div>
           </div>
 
-          {/* Contenido */}
           <div className="px-6 pb-6">
             <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-6">{desc}</p>
             <ul className="flex flex-col gap-3 mb-8">
@@ -361,7 +355,7 @@ export default function GallerySection() {
 
   return (
     <section className="relative overflow-hidden" id="services">
-      {/* Pared de galería */}
+      {/* Fondo */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(180deg, oklch(14% 0.014 45) 0%, oklch(9.5% 0.01 50) 20%, oklch(7.5% 0.008 260) 55%, oklch(5.5% 0.006 260) 100%)',
@@ -372,12 +366,10 @@ export default function GallerySection() {
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(90deg, oklch(5% 0.005 260 / 0.7) 0%, transparent 12%, transparent 88%, oklch(5% 0.005 260 / 0.7) 100%)',
         }} />
-        {/* Línea del suelo */}
         <div className="absolute bottom-32 left-0 right-0 h-px bg-[oklch(20%_0.01_260)]" />
       </div>
 
       <div className="relative pt-20 pb-16">
-        {/* Encabezado */}
         <div className="container-orquesta mb-12">
           <FadeIn direction="up">
             <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[var(--text-tertiary)] mb-4">
@@ -392,7 +384,6 @@ export default function GallerySection() {
           </FadeIn>
         </div>
 
-        {/* Carrusel 3D cilíndrico — altura fija para el cilindro */}
         <motion.div layout className="relative h-[380px] sm:h-[420px] w-full overflow-hidden">
           <Carousel
             handleClick={handleClick}
@@ -403,7 +394,6 @@ export default function GallerySection() {
           />
         </motion.div>
 
-        {/* Hint de drag */}
         <FadeIn direction="up" delay={0.4} className="flex justify-center mt-8">
           <p className="text-xs text-[var(--text-tertiary)] font-mono tracking-wider flex items-center gap-2">
             <span>←</span>
@@ -413,7 +403,6 @@ export default function GallerySection() {
         </FadeIn>
       </div>
 
-      {/* Overlay de servicio expandido */}
       <AnimatePresence mode="sync">
         {activeId && (
           <>
