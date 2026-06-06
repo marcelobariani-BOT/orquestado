@@ -1,0 +1,34 @@
+{
+  "name": "aprende-skill",
+  "owner": {
+    "name": "Hainrixz",
+    "url": "https://github.com/Hainrixz"
+  },
+  "metadata": {
+    "description": "EN: Community marketplace for the aprende plugin — a learning skill that turns conversations into durable learnings (memories, anti-pattern lessons, skill stubs, project-docs) with confirmation-first writes. ES: Marketplace comunitario para el plugin aprende — un skill de aprendizaje que convierte conversaciones en aprendizajes durables con confirmación primero.",
+    "homepage": "https://github.com/Hainrixz/aprende-skill",
+    "website": "https://www.tododeia.com"
+  },
+  "plugins": [
+    {
+      "name": "aprende",
+      "source": ".",
+      "version": "0.1.0",
+      "description": "Reflect on the current conversation and save reusable learnings across four categories (memory, lesson, skill stub, project-doc) — confirmation-first, Reflexion-style anti-patterns, dual-write to CLAUDE.md + AGENTS.md for Codex compatibility.",
+      "keywords": [
+        "learning",
+        "memory",
+        "reflection",
+        "reflexion",
+        "anti-patterns",
+        "aprender",
+        "self-improving",
+        "claude-code",
+        "codex"
+      ],
+      "author": "Hainrixz",
+      "license": "MIT",
+      "homepage": "https://github.com/Hainrixz/aprende-skill"
+    }
+  ]
+}

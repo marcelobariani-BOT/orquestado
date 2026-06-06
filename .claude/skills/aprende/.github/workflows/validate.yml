@@ -1,0 +1,88 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Future-proof: opt into Node.js 24 for JS-based actions ahead of the
+# 2026-06-02 forced switch. If our action versions break on Node 24, we
+# learn now instead of when GitHub removes Node 20 (2026-09-16).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Validate JSON files
+        run: |
+          set -e
+          for f in .claude-plugin/plugin.json .claude-plugin/marketplace.json hooks/hooks.json; do
+            echo "Checking $f"
+            python3 -c "import json,sys; json.load(open('$f'))" || { echo "INVALID JSON: $f"; exit 1; }
+          done
+
+      - name: Bash syntax check
+        run: |
+          set -e
+          for f in hooks-handlers/*.sh; do
+            echo "Checking $f"
+            bash -n "$f"
+          done
+
+      - name: Bash scripts are executable
+        run: |
+          set -e
+          for f in hooks-handlers/*.sh; do
+            [[ -x "$f" ]] || { echo "NOT EXECUTABLE: $f"; exit 1; }
+          done
+
+      - name: Frontmatter check
+        run: |
+          set -e
+          missing=0
+          for f in skills/*/SKILL.md commands/*.md; do
+            if ! head -30 "$f" | grep -qE "^(name|description):"; then
+              # commands/*.md uses description in frontmatter, skills/*/SKILL.md uses name+description
+              echo "MISSING frontmatter (name/description): $f"
+              missing=1
+            fi
+          done
+          [[ $missing -eq 0 ]] || exit 1
+
+      - name: All referenced files exist
+        run: |
+          set -e
+          # SKILL.md references references/*.md and prompts/*.md
+          for ref in lesson-format memory-format signal-patterns skill-stub-template review-workflow; do
+            [[ -f "skills/aprende/references/${ref}.md" ]] || { echo "MISSING: references/${ref}.md"; exit 1; }
+          done
+          [[ -f "skills/aprende/prompts/confirmation-template.md" ]] || { echo "MISSING: prompts/confirmation-template.md"; exit 1; }
+
+      - name: Smoke test the Stop hook
+        run: |
+          set -e
+          mkdir -p /tmp/aprende-ci/.claude/projects/-tmp-aprende-ci-proj
+          echo "- some signal" > /tmp/aprende-ci/.claude/projects/-tmp-aprende-ci-proj/.aprende-signals.md
+          out=$(CLAUDE_PROJECT_DIR=/tmp/aprende-ci/proj HOME=/tmp/aprende-ci bash hooks-handlers/stop-suggest.sh)
+          echo "$out" | python3 -c "import json,sys; json.load(sys.stdin)" || { echo "INVALID JSON from stop-suggest.sh"; exit 1; }
+          echo "Stop hook output is valid JSON: $out"
+
+      - name: Smoke test capture-signal.sh
+        run: |
+          set -e
+          mkdir -p /tmp/aprende-ci2/.claude/projects/-tmp-aprende-ci2-proj
+          echo '{"tool_name":"Bash","tool_response":{"exit_code":1,"is_error":true}}' \
+            | CLAUDE_PROJECT_DIR=/tmp/aprende-ci2/proj HOME=/tmp/aprende-ci2 \
+              bash hooks-handlers/capture-signal.sh
+          grep -q "error-from-Bash" /tmp/aprende-ci2/.claude/projects/-tmp-aprende-ci2-proj/.aprende-signals.md
+          echo "capture-signal.sh wrote expected signal"

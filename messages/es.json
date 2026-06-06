@@ -1,0 +1,111 @@
+{
+  "nav": {
+    "services": "Servicios",
+    "howItWorks": "Cómo funciona",
+    "cases": "Casos de uso",
+    "contact": "Contacto",
+    "cta": "Pedir demo"
+  },
+  "hero": {
+    "eyebrow": "Automatización con IA",
+    "headline": "Tu negocio trabaja mientras dormís",
+    "subheadline": "Orquesta conecta canales, automatiza conversaciones y opera 24/7. Sin código. Sin fricción.",
+    "ctaPrimary": "Ver demo",
+    "ctaSecondary": "Explorar servicios",
+    "badge": "Nuevo: pedidos por voz"
+  },
+  "room": {
+    "buildingLabel": "Construyendo tu sala de control",
+    "stages": [
+      {
+        "label": "Los cimientos",
+        "heading": "Todo empieza\ncon una sala vacía",
+        "body": "Antes de automatizar necesitás infraestructura. Nosotros la construimos desde cero."
+      },
+      {
+        "label": "Canal de pedidos",
+        "heading": "Mi Mostrador\nentra en escena",
+        "body": "La plataforma recibe pedidos desde WhatsApp, web y delivery. Sin llamadas. Sin papel."
+      },
+      {
+        "label": "Atención web",
+        "heading": "Un bot que\nno descansa",
+        "body": "Responde al instante, califica leads y escala a humano solo cuando hace falta."
+      },
+      {
+        "label": "Voz inteligente",
+        "heading": "Llamadas que\nse gestionan solas",
+        "body": "Salientes para campañas y cobranzas. Entrantes para derivación y agenda."
+      },
+      {
+        "label": "Gestión de turnos",
+        "heading": "La agenda\nque se maneja sola",
+        "body": "Reservas por WhatsApp o voz. Confirmación, recordatorio y cancelación automáticos."
+      },
+      {
+        "label": "Sistema activo",
+        "heading": "Tu sala\nestá operativa",
+        "body": "Todos los canales conectados al núcleo de Orquesta. El sistema trabaja. Vos supervisás.",
+        "cta": "Conocer cada servicio"
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "Los servicios",
+    "heading": "Los protagonistas\nde tu sala",
+    "subheading": "Clickeá un cuadro para explorar el servicio.",
+    "placard": "Galería Orquesta",
+    "close": "Cerrar"
+  },
+  "services": {
+    "items": {
+      "mostrador": {
+        "name": "Mi Mostrador",
+        "number": "01",
+        "tagline": "Pedidos y delivery sin fricción",
+        "description": "La plataforma de pedidos y delivery para negocios gastronómicos y retail. Menú digital, pagos, seguimiento en tiempo real.",
+        "features": ["Pedidos por WhatsApp", "Panel de control unificado", "Integración con delivery"],
+        "cta": "Ver Mi Mostrador"
+      },
+      "bots": {
+        "name": "Bots para web",
+        "number": "02",
+        "tagline": "Atención 24/7 en tu sitio",
+        "description": "Un agente de IA incrustado en tu web que responde preguntas, califica leads y escala a humano cuando hace falta.",
+        "features": ["Respuestas instantáneas", "Calificación de leads", "Escalado a humano"],
+        "cta": "Ver Bots"
+      },
+      "llamadas": {
+        "name": "Llamadas salientes",
+        "number": "03",
+        "tagline": "Tu fuerza de ventas escala sin crecer",
+        "description": "Campañas de llamadas automáticas con IA. Recordatorios, cobranzas, encuestas y seguimientos sin operadores.",
+        "features": ["Voz natural con IA", "Campañas masivas", "CRM integrado"],
+        "cta": "Ver Llamadas"
+      },
+      "recepcion": {
+        "name": "Recepción de llamadas",
+        "number": "04",
+        "tagline": "Nunca más un llamado sin atender",
+        "description": "Un recepcionista de IA que atiende, clasifica y deriva llamadas entrantes al área correcta o toma un turno.",
+        "features": ["Atención 24/7", "Derivación inteligente", "Resumen por email"],
+        "cta": "Ver Recepción"
+      },
+      "turnos": {
+        "name": "Gestión de turnos",
+        "number": "05",
+        "tagline": "La agenda que se maneja sola",
+        "description": "Tu cliente reserva por WhatsApp o voz, el sistema confirma, recuerda y cancela. Sin intervención humana.",
+        "features": ["Reservas por chat y voz", "Recordatorios automáticos", "Sincronización de agenda"],
+        "cta": "Ver Turnos"
+      }
+    }
+  },
+  "cta": {
+    "heading": "Tu negocio no duerme.\nVos sí podés.",
+    "subheading": "Empezá en 48 horas. Sin contratos largos. Sin IT interno.",
+    "primary": "Hablar con un asesor",
+    "secondary": "Ver demo grabada",
+    "whatsapp": "Escribir por WhatsApp"
+  }
+}

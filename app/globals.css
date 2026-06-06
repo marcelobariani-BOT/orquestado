@@ -2,25 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Tokens de color (OKLCH) ─────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-base:    oklch(7% 0.008 260);
+  --bg-surface: oklch(10% 0.01 260);
+  --bg-raised:  oklch(14% 0.012 260);
+  --bg-overlay: oklch(18% 0.014 260);
+
+  --border-subtle:  oklch(18% 0.012 260 / 0.6);
+  --border-default: oklch(25% 0.016 260 / 0.8);
+  --border-strong:  oklch(35% 0.02 260);
+
+  --text-primary:   oklch(95% 0.005 260);
+  --text-secondary: oklch(70% 0.01 260);
+  --text-tertiary:  oklch(45% 0.01 260);
+  --text-inverse:   oklch(8% 0.008 260);
+
+  --accent-cyan:      oklch(74% 0.17 200);
+  --accent-cyan-dim:  oklch(74% 0.17 200 / 0.15);
+  --accent-amber:     oklch(78% 0.18 55);
+  --accent-amber-dim: oklch(78% 0.18 55 / 0.15);
+
+  --service-mostrador: oklch(72% 0.16 200);
+  --service-bots:      oklch(70% 0.15 280);
+  --service-llamadas:  oklch(75% 0.17 145);
+  --service-recepcion: oklch(73% 0.16 25);
+  --service-turnos:    oklch(74% 0.15 320);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ── Reset base ─────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  overflow-x: hidden;
 }
 
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 3px;
+}
+
+::selection {
+  background: oklch(74% 0.17 200 / 0.25);
+  color: var(--text-primary);
+}
+
+/* ── Utilidades ─────────────────────────────────────────── */
 @layer utilities {
+  .container-orquesta {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
   .text-balance {
     text-wrap: balance;
   }

@@ -1,0 +1,13 @@
+# Enforce LF line endings on shell scripts so Windows clones don't break
+# the hooks. CRLF in a bash script causes "command not found" errors that
+# look like portability bugs but are line-ending bugs.
+*.sh        text eol=lf
+*.json      text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.md        text eol=lf
+
+# Mark binary-like assets so they don't get line-ending mangled.
+*.png       binary
+*.jpg       binary
+*.gif       binary
