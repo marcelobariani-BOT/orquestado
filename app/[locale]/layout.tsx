@@ -20,12 +20,12 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   return (
     <NextIntlClientProvider messages={messages}>
-      {/* Fondo de red interactivo — fixed, z-0, persiste en todo el scroll */}
+      {/* Fondo global — fixed, z-0, FUERA de cualquier stacking context */}
       <GlobalBackground />
-      {/* Contenido encima del fondo */}
-      <div className="relative" style={{ zIndex: 1 }}>
+      {/* Sin z-index ni transform en este wrapper para no romper el fixed */}
+      <main className="relative isolate">
         {children}
-      </div>
+      </main>
     </NextIntlClientProvider>
   );
 }
