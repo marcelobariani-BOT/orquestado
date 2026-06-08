@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
 import Button from '@/components/ui/Button';
 
-// WordsPullUp — animación palabra por palabra
 function WordsPullUp({ text, className = '' }: { text: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
@@ -33,7 +32,7 @@ export default function HeroSection() {
 
   return (
     <section className="h-screen w-full">
-      <div className="relative h-full w-full overflow-hidden rounded-none md:rounded-2xl">
+      <div className="relative h-full w-full overflow-hidden">
 
         {/* Video de fondo */}
         <video
@@ -42,7 +41,7 @@ export default function HeroSection() {
           src="/videos/hero-bg.mp4"
         />
 
-        {/* Overlay de ruido */}
+        {/* Overlay ruido */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.55] mix-blend-overlay"
           style={{
@@ -53,7 +52,7 @@ export default function HeroSection() {
         {/* Gradient overlay */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/75" />
 
-        {/* Contenido — pegado abajo */}
+        {/* Contenido pegado abajo */}
         <div className="absolute bottom-0 left-0 right-0 px-5 pb-3 md:px-10">
           <div className="grid grid-cols-12 items-end gap-4">
 
@@ -61,21 +60,14 @@ export default function HeroSection() {
             <div className="col-span-12 lg:col-span-8">
               <h1
                 className="font-medium leading-[0.88] tracking-[-0.05em] whitespace-nowrap"
-                style={{
-                  color: '#F0EFEA',
-                  // Tamaño calculado para que "Orquestado" entre sin cortarse
-                  // 9 letras — clamp entre 80px y 15vw
-                  fontSize: 'clamp(64px, 13.5vw, 210px)',
-                }}
+                style={{ color: '#F0EFEA', fontSize: 'clamp(56px, 12vw, 200px)' }}
               >
                 <WordsPullUp text={t('headline')} />
               </h1>
             </div>
 
-            {/* Columna derecha: tagline + descripción + CTAs */}
+            {/* Columna derecha */}
             <div className="col-span-12 lg:col-span-4 pb-5 lg:pb-8 flex flex-col gap-4">
-
-              {/* Tagline */}
               <motion.h2
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -86,7 +78,6 @@ export default function HeroSection() {
                 {t('heroTagline')}
               </motion.h2>
 
-              {/* Descripción — con fondo para legibilidad */}
               <motion.p
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -100,7 +91,6 @@ export default function HeroSection() {
                 {t('subheadline')}
               </motion.p>
 
-              {/* CTAs */}
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
