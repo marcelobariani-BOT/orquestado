@@ -4,33 +4,32 @@
     "howItWorks": "How it works",
     "cases": "Use cases",
     "contact": "Contact",
-    "cta": "Get a demo"
+    "cta": "Request demo"
   },
   "hero": {
-    "eyebrow": "AI Automation",
-    "headline": "Your business works while you sleep",
-    "subheadline": "Orquesta connects channels, automates conversations and operates 24/7. No code. No friction.",
-    "ctaPrimary": "Watch demo",
-    "ctaSecondary": "Explore services",
-    "badge": "New: voice ordering"
+    "headline": "Orquestado",
+    "heroTagline": "Your business, always on.",
+    "subheadline": "Orquestado connects channels, automates conversations, drives sales and operates 24/7. No code. No friction.",
+    "ctaPrimary": "See demo",
+    "ctaSecondary": "Explore services"
   },
   "room": {
     "buildingLabel": "Building your control room",
     "stages": [
       {
-        "label": "The foundations",
+        "label": "Foundation",
         "heading": "Everything starts\nwith an empty room",
         "body": "Before automating you need infrastructure. We build it from scratch."
       },
       {
         "label": "Order channel",
-        "heading": "Mi Mostrador\nenters the stage",
+        "heading": "Mi Mostrador\nenters the scene",
         "body": "The platform receives orders from WhatsApp, web and delivery. No calls. No paper."
       },
       {
         "label": "Web support",
         "heading": "A bot that\nnever rests",
-        "body": "Responds instantly, qualifies leads and escalates to humans only when needed."
+        "body": "Responds instantly, qualifies leads and escalates to human only when needed."
       },
       {
         "label": "Smart voice",
@@ -39,22 +38,22 @@
       },
       {
         "label": "Appointment management",
-        "heading": "The calendar\nthat runs itself",
-        "body": "Bookings via WhatsApp or voice. Automatic confirmation, reminder and cancellation."
+        "heading": "The schedule\nthat runs itself",
+        "body": "Bookings by WhatsApp or voice. Automatic confirmation, reminders and cancellations."
       },
       {
         "label": "System active",
         "heading": "Your room\nis operational",
-        "body": "All channels connected to the Orquesta core. The system works. You supervise.",
+        "body": "All channels connected to the Orquestado core. The system works. You supervise.",
         "cta": "Explore each service"
       }
     ]
   },
   "gallery": {
-    "eyebrow": "The services",
-    "heading": "The protagonists\nof your room",
-    "subheading": "Click a frame to explore the service.",
-    "placard": "Orquesta Gallery",
+    "eyebrow": "Services",
+    "heading": "The stars\nof your room",
+    "subheading": "Click a card to explore the service.",
+    "placard": "Orquestado Gallery",
     "close": "Close"
   },
   "services": {
@@ -63,7 +62,7 @@
         "name": "Mi Mostrador",
         "number": "01",
         "tagline": "Orders and delivery without friction",
-        "description": "The order and delivery platform for food service and retail businesses. Digital menu, payments, real-time tracking.",
+        "description": "The order and delivery platform for food and retail businesses. Digital menu, payments, real-time tracking.",
         "features": ["WhatsApp orders", "Unified control panel", "Delivery integration"],
         "cta": "See Mi Mostrador"
       },
@@ -71,39 +70,47 @@
         "name": "Web bots",
         "number": "02",
         "tagline": "24/7 support on your site",
-        "description": "An AI agent embedded in your website that answers questions, qualifies leads and escalates to humans when needed.",
+        "description": "An AI agent embedded in your website that answers questions, qualifies leads and escalates to human when needed.",
         "features": ["Instant responses", "Lead qualification", "Human escalation"],
         "cta": "See Bots"
       },
       "llamadas": {
         "name": "Outbound calls",
         "number": "03",
-        "tagline": "Scale your sales force without hiring",
+        "tagline": "Your sales force scales without growing",
         "description": "Automated AI calling campaigns. Reminders, collections, surveys and follow-ups without operators.",
-        "features": ["Natural AI voice", "Mass campaigns", "CRM integration"],
+        "features": ["Natural AI voice", "Mass campaigns", "CRM integrated"],
         "cta": "See Calls"
       },
       "recepcion": {
         "name": "Call reception",
         "number": "04",
         "tagline": "Never miss a call again",
-        "description": "An AI receptionist that answers, classifies and routes incoming calls to the right area or books an appointment.",
+        "description": "An AI receptionist that answers, classifies and routes incoming calls to the right area or takes an appointment.",
         "features": ["24/7 coverage", "Smart routing", "Email summary"],
         "cta": "See Reception"
       },
       "turnos": {
         "name": "Appointment management",
         "number": "05",
-        "tagline": "The calendar that manages itself",
-        "description": "Your client books via WhatsApp or voice, the system confirms, reminds and cancels. No human intervention.",
-        "features": ["Chat and voice bookings", "Automatic reminders", "Calendar sync"],
+        "tagline": "The schedule that runs itself",
+        "description": "Your client books by WhatsApp or voice, the system confirms, reminds and cancels. No human intervention.",
+        "features": ["Chat and voice bookings", "Automatic reminders", "Schedule sync"],
         "cta": "See Appointments"
+      },
+      "sitios": {
+        "name": "Web design",
+        "number": "06",
+        "tagline": "Your digital presence, frictionless.",
+        "description": "We design and develop landing pages, e-commerce and custom web apps. Fast, accessible and conversion-optimized.",
+        "features": ["High-conversion landing pages", "Online stores and e-commerce", "Custom web applications", "Technical SEO included"],
+        "cta": "See portfolio"
       }
     }
   },
   "cta": {
     "heading": "Your business never sleeps.\nNow you can.",
-    "subheading": "Get started in 48 hours. No long contracts. No internal IT.",
+    "subheading": "Start in 48 hours. No long contracts. No internal IT.",
     "primary": "Talk to an advisor",
     "secondary": "Watch recorded demo",
     "whatsapp": "Message on WhatsApp"

@@ -7,12 +7,11 @@
     "cta": "Pedir demo"
   },
   "hero": {
-    "eyebrow": "Automatización con IA",
-    "headline": "Tu negocio trabaja mientras dormís",
-    "subheadline": "Orquesta conecta canales, automatiza conversaciones y opera 24/7. Sin código. Sin fricción.",
+    "headline": "Orquestado",
+    "heroTagline": "Tu negocio, siempre activo.",
+    "subheadline": "Orquestado conecta canales, automatiza conversaciones, genera ventas y opera 24/7 cuando es necesario. Sin código. Sin fricción.",
     "ctaPrimary": "Ver demo",
-    "ctaSecondary": "Explorar servicios",
-    "badge": "Nuevo: pedidos por voz"
+    "ctaSecondary": "Explorar servicios"
   },
   "room": {
     "buildingLabel": "Construyendo tu sala de control",
@@ -45,7 +44,7 @@
       {
         "label": "Sistema activo",
         "heading": "Tu sala\nestá operativa",
-        "body": "Todos los canales conectados al núcleo de Orquesta. El sistema trabaja. Vos supervisás.",
+        "body": "Todos los canales conectados al núcleo de Orquestado. El sistema trabaja. Vos supervisás.",
         "cta": "Conocer cada servicio"
       }
     ]
@@ -54,7 +53,7 @@
     "eyebrow": "Los servicios",
     "heading": "Los protagonistas\nde tu sala",
     "subheading": "Clickeá un cuadro para explorar el servicio.",
-    "placard": "Galería Orquesta",
+    "placard": "Galería Orquestado",
     "close": "Cerrar"
   },
   "services": {
@@ -98,6 +97,14 @@
         "description": "Tu cliente reserva por WhatsApp o voz, el sistema confirma, recuerda y cancela. Sin intervención humana.",
         "features": ["Reservas por chat y voz", "Recordatorios automáticos", "Sincronización de agenda"],
         "cta": "Ver Turnos"
+      },
+      "sitios": {
+        "name": "Sitios web",
+        "number": "06",
+        "tagline": "Tu presencia digital, sin fricciones.",
+        "description": "Diseñamos y desarrollamos landing pages, e-commerce y aplicaciones web a medida. Rápidos, accesibles y optimizados para convertir.",
+        "features": ["Landing pages de alta conversión", "Tiendas online y e-commerce", "Aplicaciones web a medida", "SEO técnico incluido"],
+        "cta": "Ver portfolio"
       }
     }
   },
