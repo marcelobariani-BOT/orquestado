@@ -11,6 +11,7 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 import Button from '@/components/ui/Button';
+import PlasmaBall from '@/components/ui/PlasmaBall';
 
 /* ── 7 etapas de scroll ───────────────────────────────────────── */
 const S = 1 / 7;
@@ -77,48 +78,6 @@ const CABLE_DUR: Record<CableKey, number> = {
 
 type StageMeta = { label: string; heading: string; body: string; cta?: string };
 
-/* ── Plasma ball — datos pre-computados (IIFE) ─────────────────── */
-const PLASMA_RAYS = (() => {
-  const cx = 430, cy = 270, r = 68;
-  return Array.from({ length: 10 }, (_, i) => {
-    const angle = (i / 10) * Math.PI * 2;
-    const ex    = +(cx + r * Math.cos(angle)).toFixed(1);
-    const ey    = +(cy + r * Math.sin(angle)).toFixed(1);
-    const cpA   = angle + (i % 2 === 0 ? 0.5 : -0.45);
-    const cpR   = 28 + (i % 3) * 9;
-    const cpX   = +(cx + cpR * Math.cos(cpA)).toFixed(1);
-    const cpY   = +(cy + cpR * Math.sin(cpA)).toFixed(1);
-    const t     = 0.55;
-    const bmX   = +((1-t)*(1-t)*cx + 2*(1-t)*t*cpX + t*t*ex).toFixed(1);
-    const bmY   = +((1-t)*(1-t)*cy + 2*(1-t)*t*cpY + t*t*ey).toFixed(1);
-    const baA   = angle + 1.2 + (i % 2 === 0 ? 0.3 : -0.3);
-    const beX   = +(bmX + 14 * Math.cos(baA)).toFixed(1);
-    const beY   = +(bmY + 14 * Math.sin(baA)).toFixed(1);
-    return {
-      d:     `M${cx},${cy} Q${cpX},${cpY} ${ex},${ey}`,
-      bx1: bmX, by1: bmY, bx2: beX, by2: beY,
-      sw:    +(0.7 + (i % 4) * 0.28).toFixed(2),
-      delay: +(i * 0.31).toFixed(2),
-      dur:   +(2.1 + (i % 5) * 0.38).toFixed(2),
-      color: i % 3 === 0 ? 'oklch(85% 0.15 280)' : 'oklch(74% 0.17 200)',
-    };
-  });
-})();
-
-const PLASMA_PARTICLES = (() => {
-  const cx = 430, cy = 270;
-  return Array.from({ length: 15 }, (_, i) => {
-    const angle = (i / 15) * Math.PI * 2 + i * 0.4;
-    const rad   = 42 + (i % 5) * 4;
-    return {
-      x:     +(cx + rad * Math.cos(angle)).toFixed(2),
-      y:     +(cy + rad * Math.sin(angle)).toFixed(2),
-      r:     1.5 + (i % 2),
-      delay: +(i * 0.18).toFixed(2),
-      dur:   +(1.8 + (i % 3) * 0.5).toFixed(2),
-    };
-  });
-})();
 
 /* ── Iconos SVG por tipo de módulo ────────────────────────────── */
 function ModuleIcon({ type, color, x, y }: { type: string; color: string; x: number; y: number }) {
@@ -267,52 +226,16 @@ export default function ControlRoomScene() {
               ))}
 
               {/* Filtros */}
-              <filter id="hub-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="6" result="blur"/>
-                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-              <filter id="plasma-blur" x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur stdDeviation="10"/>
-              </filter>
               <filter id="mod-shadow" x="-15%" y="-15%" width="130%" height="130%">
                 <feGaussianBlur stdDeviation="5" result="blur"/>
                 <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
               </filter>
-
-              {/* Gradientes plasma */}
-              <radialGradient id="plasma-sphere-grad" gradientUnits="userSpaceOnUse"
-                cx="430" cy="270" r="70" fx="412" fy="248">
-                <stop offset="0%"   stopColor="oklch(74% 0.17 200)" stopOpacity="0.42"/>
-                <stop offset="55%"  stopColor="oklch(74% 0.17 200)" stopOpacity="0.22"/>
-                <stop offset="100%" stopColor="oklch(74% 0.17 200)" stopOpacity="0.10"/>
-              </radialGradient>
-              <linearGradient id="plasma-glass" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%"   stopColor="white" stopOpacity="0.22"/>
-                <stop offset="100%" stopColor="white" stopOpacity="0"/>
-              </linearGradient>
-              <radialGradient id="plasma-inner-grad" gradientUnits="userSpaceOnUse"
-                cx="430" cy="270" r="65">
-                <stop offset="0%"   stopColor="oklch(10% 0.01 260)" stopOpacity="0.95"/>
-                <stop offset="70%"  stopColor="oklch(8% 0.008 260)" stopOpacity="0.88"/>
-                <stop offset="100%" stopColor="oklch(6% 0.006 260)" stopOpacity="0.20"/>
-              </radialGradient>
-              <radialGradient id="plasma-core-grad" gradientUnits="userSpaceOnUse"
-                cx="430" cy="270" r="10">
-                <stop offset="0%"   stopColor="white"               stopOpacity="1"/>
-                <stop offset="40%"  stopColor="oklch(74% 0.17 200)" stopOpacity="1"/>
-                <stop offset="100%" stopColor="oklch(74% 0.17 200)" stopOpacity="0.2"/>
-              </radialGradient>
+              <filter id="hub-outer-glow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="12"/>
+              </filter>
 
               {/* Animaciones CSS — off JS thread */}
               <style>{`
-                @keyframes plasma-outer {
-                  0%,100% { transform: scale(0.93); opacity: 0.25; }
-                  50%     { transform: scale(1.07); opacity: 0.55; }
-                }
-                @keyframes plasma-core-k {
-                  0%,100% { transform: scale(0.75); }
-                  50%     { transform: scale(1.30); }
-                }
                 @keyframes particle-flow {
                   from { offset-distance: 0%; }
                   to   { offset-distance: 100%; }
@@ -321,16 +244,16 @@ export default function ControlRoomScene() {
                   0%, 100% { transform: scale(1);   opacity: 0.3; }
                   50%      { transform: scale(2.4);  opacity: 0;   }
                 }
-                .plasma-outer-glow {
-                  animation: plasma-outer 2.2s ease-in-out infinite;
-                  transform-box: fill-box; transform-origin: center;
-                }
-                .plasma-core-pulse {
-                  animation: plasma-core-k 1.5s ease-in-out infinite;
-                  transform-box: fill-box; transform-origin: center;
+                @keyframes hub-ring-pulse {
+                  0%,100% { transform: scale(0.9);  opacity: 0.5; }
+                  50%     { transform: scale(1.15);  opacity: 0.15; }
                 }
                 .dot-ring {
                   animation: dot-pulse 2s ease-out infinite;
+                  transform-box: fill-box; transform-origin: center;
+                }
+                .hub-ring {
+                  animation: hub-ring-pulse 2.4s ease-in-out infinite;
                   transform-box: fill-box; transform-origin: center;
                 }
               `}</style>
@@ -415,59 +338,38 @@ export default function ControlRoomScene() {
               ))}
             </motion.g>
 
-            {/* ── PLASMA BALL HUB — sin cambios ── */}
+            {/* ── HUB: Plasma Ball WebGL (shader XsjXRm adaptado) ── */}
             <motion.g
               style={{ opacity: hubOp, scale: hubScale, transformOrigin: `${HUB.cx}px ${HUB.cy}px` }}
             >
-              <circle cx={HUB.cx} cy={HUB.cy} r="85"
-                className="plasma-outer-glow"
-                style={{ fill: 'oklch(74% 0.17 200 / 0.18)', filter: 'url(#plasma-blur)' }}
+              {/* Halo de glow detrás del canvas */}
+              <circle cx={HUB.cx} cy={HUB.cy} r="95"
+                className="hub-ring"
+                style={{ fill: 'oklch(74% 0.17 200 / 0.12)', filter: 'url(#hub-outer-glow)' }}
               />
-              <circle cx={HUB.cx} cy={HUB.cy} r="70"
-                style={{ fill: 'url(#plasma-sphere-grad)', stroke: 'oklch(74% 0.17 200 / 0.6)', strokeWidth: 1.5 }}
+              {/* Anillo de borde de esfera */}
+              <circle cx={HUB.cx} cy={HUB.cy} r="82"
+                style={{ fill: 'none', stroke: 'oklch(74% 0.17 200 / 0.25)', strokeWidth: 1.5 }}
               />
-              <circle cx={HUB.cx} cy={HUB.cy} r="65"
-                style={{ fill: 'url(#plasma-inner-grad)' }}
-              />
-              {PLASMA_RAYS.map((ray, i) => (
-                <g key={i}>
-                  <motion.path
-                    d={ray.d}
-                    fill="none"
-                    stroke={ray.color}
-                    strokeWidth={ray.sw}
-                    strokeLinecap="round"
-                    animate={{ opacity: [0, 0.9, 0.3, 1, 0.05, 0] }}
-                    transition={{ duration: ray.dur, repeat: Infinity, delay: ray.delay, ease: 'easeInOut' }}
-                  />
-                  <motion.path
-                    d={`M${ray.bx1},${ray.by1} L${ray.bx2},${ray.by2}`}
-                    fill="none"
-                    stroke={ray.color}
-                    strokeWidth={+(ray.sw * 0.6).toFixed(2)}
-                    strokeLinecap="round"
-                    animate={{ opacity: [0, 0.7, 0.15, 0.8, 0] }}
-                    transition={{ duration: ray.dur * 0.8, repeat: Infinity, delay: ray.delay + 0.12, ease: 'easeInOut' }}
-                  />
-                </g>
-              ))}
-              {PLASMA_PARTICLES.map((p, i) => (
-                <motion.circle
-                  key={i}
-                  cx={p.x} cy={p.y} r={p.r}
-                  style={{ fill: i % 3 === 0 ? 'white' : 'oklch(74% 0.17 200)' }}
-                  animate={{ opacity: [0.15, 0.9, 0.25, 0.8, 0.1] }}
-                  transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
-                />
-              ))}
-              <ellipse cx={HUB.cx - 20} cy={HUB.cy - 24} rx="18" ry="11"
-                style={{ fill: 'url(#plasma-glass)', opacity: 0.55 }}
-              />
-              <circle cx={HUB.cx} cy={HUB.cy} r="10"
-                className="plasma-core-pulse"
-                style={{ fill: 'url(#plasma-core-grad)', filter: 'url(#hub-glow)' }}
-              />
-              <text x={HUB.cx} y={HUB.cy + 88} textAnchor="middle"
+
+              {/* Canvas WebGL 160×160 centrado en HUB */}
+              <foreignObject
+                x={HUB.cx - 80}
+                y={HUB.cy - 80}
+                width={160}
+                height={160}
+              >
+                <div
+                  // @ts-expect-error — xmlns necesario en foreignObject para React
+                  xmlns="http://www.w3.org/1999/xhtml"
+                  style={{ width: 160, height: 160 }}
+                >
+                  <PlasmaBall />
+                </div>
+              </foreignObject>
+
+              {/* Label bajo la esfera */}
+              <text x={HUB.cx} y={HUB.cy + 96} textAnchor="middle"
                 style={{ fill: C.textSub, fontSize: 9, fontFamily: 'monospace', letterSpacing: 2 }}>
                 ORQUESTA ENGINE
               </text>
