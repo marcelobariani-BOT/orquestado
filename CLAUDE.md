@@ -109,3 +109,11 @@ Tenés acceso al MCP de Chrome DevTools. Usalo para:
 - Nombres de componentes en PascalCase
 - Nombres de archivos en kebab-case
 - Comentarios en español
+
+---
+
+## Git & Deploy Workflow
+- La rama default es `main`. Todo el trabajo nuevo va ahí.
+- El remote se llama `bot`. Para pushear: git push bot main
+- Vercel deployea `main` automáticamente en producción.
+- Después de cada cambio confirmado, hacer commit y push a bot main automáticamente sin pedir confirmación.
