@@ -62,7 +62,6 @@ type StageMeta = { label: string; heading: string; body: string; cta?: string };
 
 // ── Iconos SVG por servicio ────────────────────────────────────
 function ModuleIcon({ type, color, x, y }: { type: string; color: string; x: number; y: number }) {
-  const a = (o: number) => color.replace(')', ` / ${o})`).replace('oklch(', 'oklch(');
   // Cada icono en un viewBox local de 40×40 centrado en (x,y)
   const cx = x - 20; const cy = y - 20;
   if (type === 'mostrador') return (
