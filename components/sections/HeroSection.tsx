@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
 import Button from '@/components/ui/Button';
+import PlasmaBall from '@/components/ui/PlasmaBall';
 
 function WordsPullUp({ text, className = '' }: { text: string; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -27,10 +28,65 @@ function WordsPullUp({ text, className = '' }: { text: string; className?: strin
   );
 }
 
+/* Replica clamp(56px, 12vw, 200px) × proporciones de la "O" */
+function calcPlasmaSize(vw: number): number {
+  const fontSize = Math.min(Math.max(vw * 0.12, 56), 200);
+  return Math.round(fontSize * 0.88 * 1.05);
+}
+
+/* ── HeroO — la "O" inicial con esfera de plasma adentro ────────── */
+function HeroO() {
+  const [plasmaSize, setPlasmaSize] = useState(() =>
+    typeof window !== 'undefined' ? calcPlasmaSize(window.innerWidth) : 160
+  );
+
+  useEffect(() => {
+    const onResize = () => setPlasmaSize(calcPlasmaSize(window.innerWidth));
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  return (
+    <span className="inline-block relative" style={{ lineHeight: 'inherit' }}>
+      {/* La "O" — transparente con solo el contorno visible */}
+      <span
+        style={{
+          color: 'transparent',
+          WebkitTextStroke: '1px rgba(240,239,234,0.45)',
+          position: 'relative',
+          zIndex: 1,
+          display: 'inline-block',
+        }}
+      >
+        O
+      </span>
+
+      {/* Plasma centrado sobre la "O" */}
+      <span
+        aria-hidden
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: plasmaSize,
+          height: plasmaSize,
+          borderRadius: '50%',
+          overflow: 'hidden',
+          display: 'block',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      >
+        <PlasmaBall size={plasmaSize} />
+      </span>
+    </span>
+  );
+}
+
 export default function HeroSection() {
   const t = useTranslations('hero');
-  const headline = t('headline'); // e.g. "Orquestado"
-  const firstLetter = headline[0];
+  const headline = t('headline');
   const rest = headline.slice(1);
 
   return (
@@ -56,7 +112,7 @@ export default function HeroSection() {
                 className="font-medium leading-[0.88] tracking-[-0.05em] whitespace-nowrap"
                 style={{ color: '#F0EFEA', fontSize: 'clamp(56px, 12vw, 200px)' }}
               >
-                <span className="inline-block">{firstLetter}</span>
+                <HeroO />
                 <WordsPullUp text={rest} className="inline-flex" />
               </h1>
             </div>
