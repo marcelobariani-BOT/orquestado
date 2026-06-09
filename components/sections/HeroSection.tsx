@@ -52,7 +52,7 @@ function HeroO() {
       <span
         style={{
           color: 'transparent',
-          WebkitTextStroke: '2px rgba(240,239,234,0.6)',
+          WebkitTextStroke: '3px rgba(240,239,234,0.85)',
           position: 'relative',
           zIndex: 1,
           display: 'inline-block',
