@@ -41,48 +41,71 @@ const SERVICE_COLORS: Record<ServiceKey, string> = {
   sitios:    'rgba(235, 175, 40, 1)',
 };
 
-// ── TextureFrame — glassmorphism con acento del color del servicio ──
+// ── TextureFrame — glassmorphism con spin border ──────────────────
+const SPIN_DURATION: Record<'slow' | 'fast', string> = {
+  slow: '4s',
+  fast: '1.5s',
+};
+
 function TextureFrame({
   children,
   color,
   isActive,
+  animationSpeed = 'slow',
 }: {
   children: React.ReactNode;
   color: string;
   isActive: boolean;
+  animationSpeed?: 'slow' | 'fast';
 }) {
   const c = (a: number) => color.replace('1)', `${a})`);
+  const dur = SPIN_DURATION[animationSpeed];
 
   return (
-    /* Contenedor exterior: padding 1px actúa como borde gradiente */
     <div
       className="relative w-full h-full"
-      style={{
-        borderRadius: 16,
-        padding: 1,
-        /* El background de este div ES el borde — se ve en los 1px de padding */
-        background: isActive
-          ? `linear-gradient(180deg, ${c(0.8)} 0%, ${c(0.3)} 100%)`
-          : `linear-gradient(180deg, ${c(0.6)} 0%, ${c(0.15)} 100%)`,
-        boxShadow: isActive
-          ? `0 0 60px ${c(0.25)}, 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 ${c(0.15)}`
-          : `0 0 30px ${c(0.12)}, 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 ${c(0.15)}`,
-        transition: 'box-shadow 0.4s ease, background 0.4s ease',
-      }}
+      style={{ borderRadius: 16, overflow: 'hidden' }}
     >
-      {/* Superficie interior glassmorphism */}
+      {/* Keyframes inline para el spin — off-JS-thread */}
+      <style>{`
+        @keyframes spin-border {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+      `}</style>
+
+      {/* Conic-gradient giratorio — ocupa 150% para barrer todo el borde */}
       <div
-        className="relative w-full h-full overflow-hidden"
+        aria-hidden
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          width: '150%',
+          height: '150%',
+          animation: `spin-border ${dur} linear infinite`,
+          background: `conic-gradient(from 0deg, transparent 0%, transparent 60%, ${c(0.9)} 80%, transparent 100%)`,
+          pointerEvents: 'none',
+        }}
+      />
+
+      {/* Superficie interior: tapa el centro del conic-gradient */}
+      <div
+        className="absolute inset-[1px] overflow-hidden"
         style={{
           borderRadius: 15,
           background: isActive
             ? 'oklch(13% 0.012 260 / 0.92)'
             : 'oklch(10% 0.01 260 / 0.85)',
+          boxShadow: isActive
+            ? `0 0 60px ${c(0.25)}, 0 20px 60px rgba(0,0,0,0.6)`
+            : `0 0 30px ${c(0.12)}, 0 20px 60px rgba(0,0,0,0.5)`,
+          transition: 'box-shadow 0.4s ease, background 0.4s ease',
         }}
       >
         {children}
 
-        {/* Highlight de vidrio: reflejo en la mitad superior */}
+        {/* Highlight de vidrio */}
         <div
           className="absolute inset-x-0 top-0 pointer-events-none"
           style={{
