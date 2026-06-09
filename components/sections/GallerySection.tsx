@@ -41,7 +41,7 @@ const SERVICE_COLORS: Record<ServiceKey, string> = {
   sitios:    'rgba(235, 175, 40, 1)',
 };
 
-// ── TextureFrame — glassmorphism con spin border ──────────────────
+// ── TextureFrame — glassmorphism + spin border + border beam ─────
 const SPIN_DURATION: Record<'slow' | 'fast', string> = {
   slow: '4s',
   fast: '1.5s',
@@ -59,22 +59,27 @@ function TextureFrame({
   animationSpeed?: 'slow' | 'fast';
 }) {
   const c = (a: number) => color.replace('1)', `${a})`);
-  const dur = SPIN_DURATION[animationSpeed];
+  const spinDur = SPIN_DURATION[animationSpeed];
+  const beamDur = isActive ? '2s' : '3s';
 
   return (
     <div
       className="relative w-full h-full"
       style={{ borderRadius: 16, overflow: 'hidden' }}
     >
-      {/* Keyframes inline para el spin — off-JS-thread */}
+      {/* Keyframes — off-JS-thread */}
       <style>{`
         @keyframes spin-border {
           from { transform: translate(-50%, -50%) rotate(0deg); }
           to   { transform: translate(-50%, -50%) rotate(360deg); }
         }
+        @keyframes beam-run {
+          from { offset-distance: 0%; }
+          to   { offset-distance: 100%; }
+        }
       `}</style>
 
-      {/* Conic-gradient giratorio — ocupa 150% para barrer todo el borde */}
+      {/* ① Conic-gradient giratorio (spin existente) */}
       <div
         aria-hidden
         style={{
@@ -83,13 +88,46 @@ function TextureFrame({
           left: '50%',
           width: '150%',
           height: '150%',
-          animation: `spin-border ${dur} linear infinite`,
+          animation: `spin-border ${spinDur} linear infinite`,
           background: `conic-gradient(from 0deg, transparent 0%, transparent 60%, ${c(0.9)} 80%, transparent 100%)`,
           pointerEvents: 'none',
+          zIndex: 1,
         }}
       />
 
-      {/* Superficie interior: tapa el centro del conic-gradient */}
+      {/* ② Borde base estático — tenue, siempre visible, encima del spin */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          inset: 0,
+          borderRadius: 16,
+          border: `2px solid ${c(0.25)}`,
+          pointerEvents: 'none',
+          zIndex: 2,
+        }}
+      />
+
+      {/* ③ Border beam — viaja por el perímetro con offset-path */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          /* ancho del destello: ~30% del perímetro promedio de la card */
+          width: 90,
+          height: 3,
+          borderRadius: 9999,
+          background: `linear-gradient(90deg, transparent 0%, ${color} 40%, ${c(0.8)} 60%, transparent 100%)`,
+          /* recorre el borde interior (1px adentro) para no quedar clippeado */
+          offsetPath: 'inset(1px round 15px)',
+          animation: `beam-run ${beamDur} linear infinite`,
+          pointerEvents: 'none',
+          zIndex: 3,
+          filter: `drop-shadow(0 0 5px ${color})`,
+        } as React.CSSProperties}
+      />
+
+      {/* ④ Superficie interior: contenido de la card, encima de todo */}
       <div
         className="absolute inset-[1px] overflow-hidden"
         style={{
@@ -101,6 +139,7 @@ function TextureFrame({
             ? `0 0 60px ${c(0.25)}, 0 20px 60px rgba(0,0,0,0.6)`
             : `0 0 30px ${c(0.12)}, 0 20px 60px rgba(0,0,0,0.5)`,
           transition: 'box-shadow 0.4s ease, background 0.4s ease',
+          zIndex: 4,
         }}
       >
         {children}
