@@ -1,11 +1,15 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
 import Button from '@/components/ui/Button';
+import PlasmaBall from '@/components/ui/PlasmaBall';
 
-function WordsPullUp({ text, className = '' }: { text: string; className?: string }) {
+/* ── WordsPullUp — animación de entrada por palabra ────────────── */
+function WordsPullUp({ text, className = '', baseDelay = 0 }: {
+  text: string; className?: string; baseDelay?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
   const words = text.split(' ');
@@ -16,7 +20,7 @@ function WordsPullUp({ text, className = '' }: { text: string; className?: strin
           key={i}
           initial={{ y: 40, opacity: 0 }}
           animate={isInView ? { y: 0, opacity: 1 } : {}}
-          transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, delay: baseDelay + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="inline-block"
           style={{ marginRight: i < words.length - 1 ? '0.22em' : 0 }}
         >
@@ -27,8 +31,79 @@ function WordsPullUp({ text, className = '' }: { text: string; className?: strin
   );
 }
 
+/* ── HeroO — la "O" inicial con esfera de plasma adentro ────────── */
+function HeroO({ isInView }: { isInView: boolean }) {
+  const spanRef = useRef<HTMLSpanElement>(null);
+  const [plasmaSize, setPlasmaSize] = useState(0);
+
+  /* Medir la "O" después de que el layout se estabilice */
+  useEffect(() => {
+    if (!spanRef.current) return;
+    const measure = () => {
+      const rect = spanRef.current!.getBoundingClientRect();
+      /* El plasma debe ser levemente más grande que el alto del carácter */
+      setPlasmaSize(Math.round(rect.height * 1.15));
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  return (
+    <motion.span
+      initial={{ y: 40, opacity: 0 }}
+      animate={isInView ? { y: 0, opacity: 1 } : {}}
+      transition={{ duration: 0.7, delay: 0, ease: [0.16, 1, 0.3, 1] }}
+      className="inline-block relative"
+      style={{ lineHeight: 'inherit' }}
+    >
+      {/* La "O" — transparente con solo el contorno visible */}
+      <span
+        ref={spanRef}
+        style={{
+          color: 'transparent',
+          WebkitTextStroke: '1px rgba(240,239,234,0.45)',
+          position: 'relative',
+          zIndex: 1,
+          display: 'inline-block',
+        }}
+      >
+        O
+      </span>
+
+      {/* Plasma dentro de la "O": se posiciona en el centro del span */}
+      {plasmaSize > 0 && (
+        <span
+          aria-hidden
+          style={{
+            position: 'absolute',
+            /* Centrar verticalmente — line-height del h1 es 0.88 */
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width:  plasmaSize,
+            height: plasmaSize,
+            borderRadius: '50%',
+            overflow: 'hidden',
+            display: 'block',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        >
+          <PlasmaBall size={plasmaSize} />
+        </span>
+      )}
+    </motion.span>
+  );
+}
+
+/* ── HeroSection ─────────────────────────────────────────────────── */
 export default function HeroSection() {
   const t = useTranslations('hero');
+
+  /* Ref compartido para activar la entrada de la "O" y "rquestado" */
+  const headlineRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(headlineRef, { once: true });
 
   return (
     <section className="h-screen w-full">
@@ -62,7 +137,20 @@ export default function HeroSection() {
                 className="font-medium leading-[0.88] tracking-[-0.05em] whitespace-nowrap"
                 style={{ color: '#F0EFEA', fontSize: 'clamp(56px, 12vw, 200px)' }}
               >
-                <WordsPullUp text={t('headline')} />
+                {/* Ref en el contenedor para detectar entrada */}
+                <div ref={headlineRef} className="inline-flex items-baseline">
+                  {/* "O" — plasma */}
+                  <HeroO isInView={isInView} />
+                  {/* "rquestado" — pullup con delay mínimo */}
+                  <motion.span
+                    initial={{ y: 40, opacity: 0 }}
+                    animate={isInView ? { y: 0, opacity: 1 } : {}}
+                    transition={{ duration: 0.7, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+                    className="inline-block"
+                  >
+                    rquestado
+                  </motion.span>
+                </div>
               </h1>
             </div>
 
