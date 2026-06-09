@@ -41,7 +41,7 @@ const SERVICE_COLORS: Record<ServiceKey, string> = {
   sitios:    'rgba(235, 175, 40, 1)',
 };
 
-// ── TextureFrame — marco de cuadro con biseles y esquinas ornamentales ──
+// ── TextureFrame — glassmorphism con acento del color del servicio ──
 function TextureFrame({
   children,
   color,
@@ -54,88 +54,44 @@ function TextureFrame({
   const c = (a: number) => color.replace('1)', `${a})`);
 
   return (
+    /* Contenedor exterior: padding 1px actúa como borde gradiente */
     <div
       className="relative w-full h-full"
       style={{
-        borderRadius: isActive ? 14 : 12,
-        /* Marco exterior: el "perfil" del cuadro */
+        borderRadius: 16,
+        padding: 1,
+        /* El background de este div ES el borde — se ve en los 1px de padding */
         background: isActive
-          ? `linear-gradient(145deg,
-              ${c(0.55)} 0%,
-              ${c(0.25)} 25%,
-              ${c(0.45)} 50%,
-              ${c(0.15)} 75%,
-              ${c(0.50)} 100%
-            )`
-          : `linear-gradient(145deg,
-              oklch(32% 0.012 260) 0%,
-              oklch(18% 0.008 260) 30%,
-              oklch(28% 0.010 260) 55%,
-              oklch(14% 0.007 260) 80%,
-              oklch(26% 0.011 260) 100%
-            )`,
-        padding: isActive ? 6 : 5,
+          ? `linear-gradient(180deg, ${c(0.8)} 0%, ${c(0.3)} 100%)`
+          : `linear-gradient(180deg, ${c(0.6)} 0%, ${c(0.15)} 100%)`,
         boxShadow: isActive
-          ? `0 0 0 1px ${c(0.8)}, 0 28px 70px rgba(0,0,0,0.75), 0 4px 18px ${c(0.35)}, inset 0 1px 0 ${c(0.4)}`
-          : `0 0 0 1px oklch(28% 0.01 260), 0 14px 42px rgba(0,0,0,0.55), inset 0 1px 0 oklch(34% 0.012 260)`,
-        transition: 'all 0.4s ease',
+          ? `0 0 60px ${c(0.25)}, 0 20px 60px rgba(0,0,0,0.6), inset 0 1px 0 ${c(0.15)}`
+          : `0 0 30px ${c(0.12)}, 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 ${c(0.15)}`,
+        transition: 'box-shadow 0.4s ease, background 0.4s ease',
       }}
     >
-      {/* Bisel interior: segundo perfil del marco */}
-      <div style={{
-        borderRadius: isActive ? 10 : 8,
-        padding: 3,
-        height: '100%',
-        background: isActive
-          ? `linear-gradient(315deg, ${c(0.4)} 0%, ${c(0.1)} 50%, ${c(0.35)} 100%)`
-          : 'linear-gradient(315deg, oklch(22% 0.009 260) 0%, oklch(12% 0.006 260) 50%, oklch(20% 0.008 260) 100%)',
-      }}>
-        {/* Superficie interior del cuadro */}
-        <div
-          style={{
-            borderRadius: isActive ? 8 : 6,
-            height: '100%',
-            background: isActive
-              ? `linear-gradient(160deg, oklch(16% 0.014 50) 0%, oklch(11% 0.010 48) 100%)`
-              : `linear-gradient(160deg, oklch(10% 0.009 260) 0%, oklch(7.5% 0.007 260) 100%)`,
-            border: `1px solid ${isActive ? c(0.2) : 'oklch(16% 0.008 260)'}`,
-            overflow: 'hidden',
-          }}
-        >
-          {children}
-        </div>
-      </div>
+      {/* Superficie interior glassmorphism */}
+      <div
+        className="relative w-full h-full overflow-hidden"
+        style={{
+          borderRadius: 15,
+          background: isActive
+            ? 'oklch(13% 0.012 260 / 0.92)'
+            : 'oklch(10% 0.01 260 / 0.85)',
+        }}
+      >
+        {children}
 
-      {/* Esquinas ornamentales — L-brackets de cuadro */}
-      {([
-        { top: 4,    left: 4,    rotX: 1,  rotY: 1  },
-        { top: 4,    right: 4,   rotX: 1,  rotY: -1 },
-        { bottom: 4, left: 4,    rotX: -1, rotY: 1  },
-        { bottom: 4, right: 4,   rotX: -1, rotY: -1 },
-      ] as Array<{ top?: number; bottom?: number; left?: number; right?: number; rotX: number; rotY: number }>)
-        .map((corner, i) => (
-          <svg
-            key={i}
-            width="14" height="14"
-            viewBox="0 0 14 14"
-            className="absolute pointer-events-none"
-            style={{
-              top: corner.top, bottom: corner.bottom,
-              left: corner.left, right: corner.right,
-              transform: `scale(${corner.rotX}, ${corner.rotY})`,
-              opacity: isActive ? 0.9 : 0.55,
-            }}
-          >
-            <path
-              d="M2 12 L2 2 L12 2"
-              fill="none"
-              stroke={isActive ? color : 'oklch(45% 0.012 260)'}
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        ))}
+        {/* Highlight de vidrio: reflejo en la mitad superior */}
+        <div
+          className="absolute inset-x-0 top-0 pointer-events-none"
+          style={{
+            height: '40%',
+            borderRadius: '15px 15px 0 0',
+            background: `linear-gradient(180deg, ${c(0.06)} 0%, transparent 100%)`,
+          }}
+        />
+      </div>
     </div>
   );
 }
