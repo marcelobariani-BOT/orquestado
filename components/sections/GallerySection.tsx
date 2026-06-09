@@ -453,9 +453,9 @@ export default function GallerySection() {
               }}>
               {t('gallery.heading')}
             </h2>
-            {/* Subheading: legible */}
+            {/* Subheading: mismo nivel visual que el eyebrow */}
             <p className="text-sm font-mono tracking-wide"
-              style={{ color: 'oklch(62% 0.01 260)' }}>
+              style={{ color: 'oklch(72% 0.01 260)' }}>
               {t('gallery.subheading')}
             </p>
           </FadeIn>

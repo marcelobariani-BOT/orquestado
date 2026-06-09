@@ -586,24 +586,46 @@ function RoomModule({ m, borderOpacity, tagline, textVisible, taglineDelay }: Ro
   const contentY = m.y + 18;
   const screenH  = isWide ? 72 : 48;
 
+  /* IDs únicos para los gradientes de este módulo */
+  const gradId   = `border-grad-${m.icon}`;
+  const shadowId = `shadow-${m.icon}`;
+
   return (
     <>
-      {/* Sombra glow */}
-      <rect x={m.x + 4} y={m.y + 4} width={m.w} height={m.h} rx={m.rx}
-        style={{ fill: m.color.replace(')', ' / 0.1)'), filter: 'url(#mod-glow)' }}
+      {/* Definiciones de gradiente por módulo (inline en el SVG padre via defs) */}
+      <defs>
+        {/* Gradiente de borde: color del servicio 0.6 arriba → 0.15 abajo */}
+        <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor={m.color} stopOpacity={borderOpacity > 0.5 ? 0.85 : 0.6} />
+          <stop offset="100%" stopColor={m.color} stopOpacity={borderOpacity > 0.5 ? 0.35 : 0.15} />
+        </linearGradient>
+        {/* Filter de sombra suave por módulo */}
+        <filter id={shadowId} x="-10%" y="-10%" width="120%" height="130%">
+          <feGaussianBlur stdDeviation="4" />
+        </filter>
+      </defs>
+
+      {/* Sombra de profundidad: rect desplazado con blur */}
+      <rect x={m.x + 3} y={m.y + 3} width={m.w} height={m.h} rx={m.rx}
+        style={{ fill: m.color, opacity: 0.06, filter: `url(#${shadowId})` }}
       />
-      {/* Fondo glassmorphism */}
+
+      {/* Fondo glassmorphism: semi-transparente */}
       <rect x={m.x} y={m.y} width={m.w} height={m.h} rx={m.rx}
         style={{
-          fill: 'oklch(12% 0.013 260)',
-          stroke: m.color.replace(')', ` / ${borderOpacity})`),
+          fill: 'oklch(12% 0.013 260 / 0.75)',
+          stroke: `url(#${gradId})`,
           strokeWidth: 1.5,
-          transition: 'stroke 0.3s',
         }}
       />
-      {/* Línea superior de acento */}
-      <rect x={m.x + 1} y={m.y + 1} width={m.w - 2} height="1" rx={Math.min(m.rx, 4)}
-        style={{ fill: m.color.replace(')', ' / 0.4)') }}
+
+      {/* Highlight superior: reflejo de vidrio */}
+      <rect x={m.x + 1} y={m.y + 1} width={m.w - 2} height={1} rx={Math.min(m.rx, 4)}
+        style={{ fill: 'white', opacity: 0.08 }}
+      />
+      {/* Segunda línea de acento cromática */}
+      <rect x={m.x + 1} y={m.y + 2} width={m.w - 2} height={1} rx={Math.min(m.rx, 4)}
+        style={{ fill: m.color, opacity: 0.35 }}
       />
       {/* Área de datos */}
       <rect x={m.x + 10} y={contentY} width={m.w - 20} height={screenH} rx="4"
