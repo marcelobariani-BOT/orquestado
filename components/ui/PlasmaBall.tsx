@@ -133,18 +133,10 @@ export default function PlasmaBall({ size = 200, x, y }: PlasmaBallProps) {
         `}</style>
       </defs>
 
-      {/* Glow exterior */}
-      <circle cx={cx} cy={cy} r="85"
+      {/* Glow exterior — sutil, no opaca el fondo */}
+      <circle cx={cx} cy={cy} r="80"
         className={`${uid}-outer`}
-        style={{ fill: 'oklch(74% 0.17 200 / 0.18)', filter: `url(#${uid}-blur)` }}
-      />
-      {/* Esfera principal */}
-      <circle cx={cx} cy={cy} r="70"
-        style={{ fill: `url(#${uid}-sphere)`, stroke: 'oklch(74% 0.17 200 / 0.6)', strokeWidth: 1.5 }}
-      />
-      {/* Fondo oscuro interior */}
-      <circle cx={cx} cy={cy} r="65"
-        style={{ fill: `url(#${uid}-inner)` }}
+        style={{ fill: 'oklch(74% 0.17 200 / 0.10)', filter: `url(#${uid}-blur)` }}
       />
 
       {/* Rayos de plasma */}

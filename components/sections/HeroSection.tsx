@@ -52,7 +52,7 @@ function HeroO() {
       <span
         style={{
           color: 'transparent',
-          WebkitTextStroke: '1px rgba(240,239,234,0.45)',
+          WebkitTextStroke: '2px rgba(240,239,234,0.6)',
           position: 'relative',
           zIndex: 1,
           display: 'inline-block',
@@ -61,7 +61,7 @@ function HeroO() {
         O
       </span>
 
-      {/* Plasma centrado sobre la "O" */}
+      {/* Plasma centrado sobre la "O" — sin overflow:hidden para que el glow respire */}
       <span
         aria-hidden
         style={{
@@ -71,8 +71,6 @@ function HeroO() {
           transform: 'translate(-50%, -50%)',
           width: plasmaSize,
           height: plasmaSize,
-          borderRadius: '50%',
-          overflow: 'hidden',
           display: 'block',
           pointerEvents: 'none',
           zIndex: 0,
