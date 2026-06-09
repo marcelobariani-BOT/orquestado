@@ -28,9 +28,9 @@ function useMediaQuery(query: string, { defaultValue = false, initializeWithValu
 }
 
 // ── Tipos y datos ──────────────────────────────────────────────
-type ServiceKey = 'mostrador' | 'bots' | 'llamadas' | 'recepcion' | 'turnos';
+type ServiceKey = 'mostrador' | 'bots' | 'llamadas' | 'recepcion' | 'turnos' | 'sitios';
 
-const SERVICE_KEYS: ServiceKey[] = ['mostrador', 'bots', 'llamadas', 'recepcion', 'turnos'];
+const SERVICE_KEYS: ServiceKey[] = ['mostrador', 'bots', 'llamadas', 'recepcion', 'turnos', 'sitios'];
 
 const SERVICE_COLORS: Record<ServiceKey, string> = {
   mostrador: 'rgba(30, 210, 255, 1)',
@@ -38,9 +38,10 @@ const SERVICE_COLORS: Record<ServiceKey, string> = {
   llamadas:  'rgba(60, 220, 130, 1)',
   recepcion: 'rgba(255, 130, 60, 1)',
   turnos:    'rgba(220, 60, 220, 1)',
+  sitios:    'rgba(235, 175, 40, 1)',
 };
 
-// ── TextureFrame ───────────────────────────────────────────────
+// ── TextureFrame — marco de cuadro con biseles y esquinas ornamentales ──
 function TextureFrame({
   children,
   color,
@@ -50,51 +51,91 @@ function TextureFrame({
   color: string;
   isActive: boolean;
 }) {
-  const borderAlpha = color.replace('1)', '0.3)');
-  const borderFaint = color.replace('1)', '0.12)');
-  const bgAlpha = color.replace('1)', '0.04)');
+  const c = (a: number) => color.replace('1)', `${a})`);
 
   return (
     <div
-      className="relative w-full h-full overflow-hidden"
+      className="relative w-full h-full"
       style={{
-        borderRadius: 16,
-        padding: 7,
+        borderRadius: isActive ? 14 : 12,
+        /* Marco exterior: el "perfil" del cuadro */
         background: isActive
-          ? 'linear-gradient(145deg, oklch(26% 0.018 50) 0%, oklch(18% 0.013 45) 50%, oklch(24% 0.016 50) 100%)'
-          : 'linear-gradient(145deg, oklch(18% 0.012 260) 0%, oklch(13% 0.009 260) 50%, oklch(16% 0.011 260) 100%)',
+          ? `linear-gradient(145deg,
+              ${c(0.55)} 0%,
+              ${c(0.25)} 25%,
+              ${c(0.45)} 50%,
+              ${c(0.15)} 75%,
+              ${c(0.50)} 100%
+            )`
+          : `linear-gradient(145deg,
+              oklch(32% 0.012 260) 0%,
+              oklch(18% 0.008 260) 30%,
+              oklch(28% 0.010 260) 55%,
+              oklch(14% 0.007 260) 80%,
+              oklch(26% 0.011 260) 100%
+            )`,
+        padding: isActive ? 6 : 5,
         boxShadow: isActive
-          ? `0 24px 60px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.4), inset 0 1px 0 ${borderAlpha}`
-          : `0 12px 40px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 oklch(28% 0.012 260)`,
-        transition: 'box-shadow 0.4s ease, background 0.4s ease',
+          ? `0 0 0 1px ${c(0.8)}, 0 28px 70px rgba(0,0,0,0.75), 0 4px 18px ${c(0.35)}, inset 0 1px 0 ${c(0.4)}`
+          : `0 0 0 1px oklch(28% 0.01 260), 0 14px 42px rgba(0,0,0,0.55), inset 0 1px 0 oklch(34% 0.012 260)`,
+        transition: 'all 0.4s ease',
       }}
     >
-      <div style={{ borderRadius: 10, border: `1px solid ${borderAlpha}`, height: '100%' }}>
-        <div style={{ borderRadius: 9, border: `1px solid ${borderFaint}`, height: '100%' }}>
-          <div
-            style={{
-              borderRadius: 8,
-              height: '100%',
-              background: `linear-gradient(160deg, oklch(10% 0.009 260) 0%, oklch(8% 0.007 260) 100%)`,
-              border: `1px solid ${bgAlpha}`,
-            }}
-          >
-            {children}
-          </div>
+      {/* Bisel interior: segundo perfil del marco */}
+      <div style={{
+        borderRadius: isActive ? 10 : 8,
+        padding: 3,
+        height: '100%',
+        background: isActive
+          ? `linear-gradient(315deg, ${c(0.4)} 0%, ${c(0.1)} 50%, ${c(0.35)} 100%)`
+          : 'linear-gradient(315deg, oklch(22% 0.009 260) 0%, oklch(12% 0.006 260) 50%, oklch(20% 0.008 260) 100%)',
+      }}>
+        {/* Superficie interior del cuadro */}
+        <div
+          style={{
+            borderRadius: isActive ? 8 : 6,
+            height: '100%',
+            background: isActive
+              ? `linear-gradient(160deg, oklch(16% 0.014 50) 0%, oklch(11% 0.010 48) 100%)`
+              : `linear-gradient(160deg, oklch(10% 0.009 260) 0%, oklch(7.5% 0.007 260) 100%)`,
+            border: `1px solid ${isActive ? c(0.2) : 'oklch(16% 0.008 260)'}`,
+            overflow: 'hidden',
+          }}
+        >
+          {children}
         </div>
       </div>
 
-      {/* Tornillos de esquina — coordenadas fijas relativas al padding de 7px */}
-      {[{ l: 3, t: 3 }, { r: 3, t: 3 }, { l: 3, b: 3 }, { r: 3, b: 3 }].map((pos, i) => (
-        <div key={i}
-          className="absolute w-1.5 h-1.5 rounded-full"
-          style={{
-            ...(pos.l !== undefined ? { left: pos.l } : { right: (pos as { r: number; t?: number; b?: number }).r }),
-            ...('t' in pos && pos.t !== undefined ? { top: pos.t } : { bottom: (pos as { l?: number; r?: number; b: number }).b }),
-            background: isActive ? 'oklch(30% 0.015 50)' : 'oklch(22% 0.01 260)',
-          }}
-        />
-      ))}
+      {/* Esquinas ornamentales — L-brackets de cuadro */}
+      {([
+        { top: 4,    left: 4,    rotX: 1,  rotY: 1  },
+        { top: 4,    right: 4,   rotX: 1,  rotY: -1 },
+        { bottom: 4, left: 4,    rotX: -1, rotY: 1  },
+        { bottom: 4, right: 4,   rotX: -1, rotY: -1 },
+      ] as Array<{ top?: number; bottom?: number; left?: number; right?: number; rotX: number; rotY: number }>)
+        .map((corner, i) => (
+          <svg
+            key={i}
+            width="14" height="14"
+            viewBox="0 0 14 14"
+            className="absolute pointer-events-none"
+            style={{
+              top: corner.top, bottom: corner.bottom,
+              left: corner.left, right: corner.right,
+              transform: `scale(${corner.rotX}, ${corner.rotY})`,
+              opacity: isActive ? 0.9 : 0.55,
+            }}
+          >
+            <path
+              d="M2 12 L2 2 L12 2"
+              fill="none"
+              stroke={isActive ? color : 'oklch(45% 0.012 260)'}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ))}
     </div>
   );
 }
@@ -106,7 +147,7 @@ function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
     <svg viewBox="0 0 120 80" className="w-full h-full">
       {[0,1,2,3].map(i => <rect key={i} x="8" y={8+i*18} width={55+i*14} height="11" rx="5.5" style={{ fill: i===0 ? color : a(0.5+i*0.1) }} />)}
       <circle cx="100" cy="40" r="16" style={{ fill: a(0.12), stroke: color, strokeWidth: 1.5 }} />
-      <text x="100" y="45" textAnchor="middle" style={{ fill: color, fontSize: 16 }}>✓</text>
+      <text x="100" y="45" textAnchor="middle" style={{ fill: color, fontSize: 16, fontFamily: 'sans-serif' }}>✓</text>
     </svg>
   );
   if (id === 'bots') return (
@@ -136,6 +177,29 @@ function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
       ))}
     </svg>
   );
+  if (id === 'sitios') return (
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Browser window */}
+      <rect x="6" y="6" width="108" height="68" rx="7" style={{ fill: a(0.08), stroke: color, strokeWidth: 1.5 }} />
+      {/* Barra superior */}
+      <rect x="6" y="6" width="108" height="18" rx="7" style={{ fill: a(0.22) }} />
+      <rect x="6" y="18" width="108" height="6" style={{ fill: a(0.12) }} />
+      {/* Traffic lights */}
+      <circle cx="20" cy="15" r="3.5" style={{ fill: 'rgba(255,95,87,0.9)' }} />
+      <circle cx="31" cy="15" r="3.5" style={{ fill: 'rgba(255,189,46,0.9)' }} />
+      <circle cx="42" cy="15" r="3.5" style={{ fill: 'rgba(40,200,64,0.9)' }} />
+      {/* URL bar */}
+      <rect x="55" y="10" width="48" height="10" rx="5" style={{ fill: a(0.18), stroke: color, strokeWidth: 0.8 }} />
+      {/* Contenido: hero headline */}
+      <rect x="14" y="32" width="60" height="8" rx="4" style={{ fill: color, opacity: 0.9 }} />
+      <rect x="14" y="44" width="45" height="6" rx="3" style={{ fill: color, opacity: 0.5 }} />
+      {/* CTA button */}
+      <rect x="14" y="55" width="28" height="12" rx="6" style={{ fill: color, opacity: 0.85 }} />
+      {/* Imagen derecha */}
+      <rect x="82" y="30" width="26" height="36" rx="4" style={{ fill: a(0.2), stroke: color, strokeWidth: 1 }} />
+    </svg>
+  );
+  /* turnos — default */
   return (
     <svg viewBox="0 0 120 80" className="w-full h-full">
       {[0,1,2,3].map(row => [0,1,2,3,4].map(col => (
@@ -150,6 +214,7 @@ function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
 function ServiceFaceCard({
   id, color, name, number, tagline,
 }: { id: ServiceKey; color: string; name: string; number: string; tagline: string }) {
+  const c = (a: number) => color.replace('1)', `${a})`);
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 flex items-center justify-center p-5 pt-6">
@@ -157,15 +222,15 @@ function ServiceFaceCard({
           <ServiceArtwork id={id} color={color} />
         </div>
       </div>
-      <div className="mx-4 h-px" style={{ background: color.replace('1)', '0.15)') }} />
+      <div className="mx-4 h-px" style={{ background: c(0.2) }} />
       <div className="p-4 pb-5">
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-mono text-[10px]" style={{ color: color.replace('1)', '0.65)') }}>{number}</span>
+          <span className="font-mono text-[10px]" style={{ color: c(0.65) }}>{number}</span>
           <h3 className="text-sm font-bold text-[var(--text-primary)] leading-tight">{name}</h3>
         </div>
-        <p className="text-[10px] text-[var(--text-tertiary)] leading-tight mt-1">{tagline}</p>
+        <p className="text-[10px] leading-snug mt-1" style={{ color: c(0.7) }}>{tagline}</p>
         <div className="mt-3 flex items-center gap-1">
-          <span className="text-[9px] font-mono tracking-widest" style={{ color: color.replace('1)', '0.5)') }}>
+          <span className="text-[9px] font-mono tracking-widest" style={{ color: c(0.55) }}>
             VER MÁS →
           </span>
         </div>
@@ -194,7 +259,7 @@ const Carousel = memo((
   }
 ) => {
   const isSmall = useMediaQuery('(max-width: 640px)');
-  const cylinderWidth = isSmall ? 1000 : 1700;
+  const cylinderWidth = isSmall ? 1100 : 1900;
   const faceCount = services.length;
   const faceWidth = cylinderWidth / faceCount;
   const radius = cylinderWidth / (2 * Math.PI);
@@ -210,11 +275,9 @@ const Carousel = memo((
         drag={isCarouselActive ? 'x' : false}
         className="relative flex h-full origin-center cursor-grab justify-center active:cursor-grabbing"
         style={{ transform, rotateY: rotation, width: cylinderWidth, transformStyle: 'preserve-3d' }}
-        // FIX: usar info.delta.x (delta por frame) en lugar de info.offset.x (acumulativo)
         onDrag={(_, info) =>
           isCarouselActive && rotation.set(rotation.get() + info.delta.x * 0.3)
         }
-        // FIX: velocidad reducida 0.05 → 0.015 para inercia natural
         onDragEnd={(_, info) =>
           isCarouselActive &&
           controls.start({
@@ -247,7 +310,7 @@ const Carousel = memo((
                 initial={{ filter: 'blur(4px)' }}
                 animate={{ filter: 'blur(0px)' }}
                 transition={TRANSITION}
-                whileHover={{ scale: 1.04, transition: { duration: 0.2 } }}
+                whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
               >
                 <TextureFrame color={color} isActive={false}>
                   <ServiceFaceCard id={id} color={color} name={name} number={number} tagline={tagline} />
@@ -273,6 +336,7 @@ function ServiceOverlay({
   const desc = t(`services.items.${id}.description`);
   const features = t.raw(`services.items.${id}.features`) as string[];
   const cta = t(`services.items.${id}.cta`);
+  const c = (a: number) => color.replace('1)', `${a})`);
 
   return (
     <motion.div
@@ -290,13 +354,13 @@ function ServiceOverlay({
       <TextureFrame color={color} isActive={true}>
         <div className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
           <div className="flex items-start justify-between p-6 pb-4 border-b"
-            style={{ borderColor: color.replace('1)', '0.12)') }}>
+            style={{ borderColor: c(0.15) }}>
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <span className="font-mono text-xs" style={{ color: color.replace('1)', '0.7)') }}>{number}</span>
+                <span className="font-mono text-xs" style={{ color: c(0.7) }}>{number}</span>
                 <h2 className="text-2xl font-bold text-[var(--text-primary)]">{name}</h2>
               </div>
-              <p className="text-sm" style={{ color: color.replace('1)', '0.85)') }}>{tagline}</p>
+              <p className="text-sm font-medium" style={{ color }}>{tagline}</p>
             </div>
             <button onClick={onClose}
               className="w-8 h-8 rounded-full flex items-center justify-center text-lg text-[var(--text-tertiary)] hover:text-[var(--text-primary)] transition-colors flex-shrink-0 cursor-pointer"
@@ -307,7 +371,7 @@ function ServiceOverlay({
 
           <div className="p-6 pb-0">
             <div className="rounded-lg flex items-center justify-center mb-6"
-              style={{ height: 110, background: color.replace('1)', '0.06)'), border: `1px solid ${color.replace('1)', '0.15)')}` }}>
+              style={{ height: 110, background: c(0.07), border: `1px solid ${c(0.2)}` }}>
               <div style={{ width: 220, height: 85 }}>
                 <ServiceArtwork id={id} color={color} />
               </div>
@@ -370,21 +434,34 @@ export default function GallerySection() {
       </div>
 
       <div className="relative pt-20 pb-16">
-        <div className="container-orquesta mb-12">
+        {/* ── Header: más contraste y presencia ── */}
+        <div className="container-orquesta mb-14">
           <FadeIn direction="up">
-            <p className="text-[10px] font-semibold tracking-[0.22em] uppercase text-[var(--text-tertiary)] mb-4">
-              {t('gallery.eyebrow')}
-            </p>
-            <h2 className="text-display-xl font-bold text-[var(--text-primary)] whitespace-pre-line leading-[1.0] tracking-tight">
+            {/* Eyebrow: ámbar, más luminoso */}
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-px w-8" style={{ background: 'oklch(78% 0.18 55)' }} />
+              <p className="text-[11px] font-bold tracking-[0.28em] uppercase"
+                style={{ color: 'oklch(78% 0.18 55)' }}>
+                {t('gallery.eyebrow')}
+              </p>
+            </div>
+            {/* Heading: más peso visual */}
+            <h2 className="text-display-xl font-bold leading-[0.97] tracking-tight whitespace-pre-line mb-5"
+              style={{
+                color: 'oklch(96% 0.008 260)',
+                textShadow: '0 2px 40px oklch(74% 0.17 200 / 0.15)',
+              }}>
               {t('gallery.heading')}
             </h2>
-            <p className="text-sm text-[var(--text-tertiary)] mt-4 font-mono tracking-wide">
+            {/* Subheading: legible */}
+            <p className="text-sm font-mono tracking-wide"
+              style={{ color: 'oklch(62% 0.01 260)' }}>
               {t('gallery.subheading')}
             </p>
           </FadeIn>
         </div>
 
-        <motion.div layout className="relative h-[380px] sm:h-[420px] w-full overflow-hidden">
+        <motion.div layout className="relative h-[380px] sm:h-[430px] w-full overflow-hidden">
           <Carousel
             handleClick={handleClick}
             controls={controls}
@@ -395,7 +472,8 @@ export default function GallerySection() {
         </motion.div>
 
         <FadeIn direction="up" delay={0.4} className="flex justify-center mt-8">
-          <p className="text-xs text-[var(--text-tertiary)] font-mono tracking-wider flex items-center gap-2">
+          <p className="text-xs font-mono tracking-wider flex items-center gap-2"
+            style={{ color: 'oklch(55% 0.01 260)' }}>
             <span>←</span>
             <span>arrastrá para girar</span>
             <span>→</span>
