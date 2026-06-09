@@ -35,38 +35,38 @@ const MODULE_STAGE_IDX: Record<ModuleKey, number> = {
 };
 
 const MODULES: Record<ModuleKey, {
-  x: number; y: number; w: number; h: number; color: string; label: string; icon: string
+  x: number; y: number; w: number; h: number; color: string; label: string; icon: string; rx: number
 }> = {
-  mostrador: { x: 60,  y: 60,  w: 200, h: 140, color: C.mostrador, label: 'Mi Mostrador', icon: 'mostrador' },
-  bots:      { x: 600, y: 60,  w: 200, h: 140, color: C.bots,      label: 'Bots web',     icon: 'bots'      },
-  llamadas:  { x: 60,  y: 330, w: 200, h: 140, color: C.llamadas,  label: 'Llamadas',     icon: 'llamadas'  },
-  recepcion: { x: 600, y: 330, w: 200, h: 140, color: C.recepcion, label: 'Recepción',    icon: 'recepcion' },
-  turnos:    { x: 295, y: 425, w: 180, h: 90,  color: C.turnos,    label: 'Turnos',       icon: 'turnos'    },
-  /* CAMBIO 4 — Sitios web */
-  sitios:    { x: 580, y: 380, w: 190, h: 120, color: C.sitios,    label: 'Sitios web',   icon: 'sitios'    },
+  /* CAMBIO 2 — posiciones orgánicas | CAMBIO 3 — rx por módulo */
+  mostrador: { x: 45,  y: 35,  w: 220, h: 155, color: C.mostrador, label: 'Mi Mostrador', icon: 'mostrador', rx: 12 },
+  bots:      { x: 580, y: 20,  w: 185, h: 130, color: C.bots,      label: 'Bots web',     icon: 'bots',      rx: 3  },
+  llamadas:  { x: 25,  y: 320, w: 195, h: 140, color: C.llamadas,  label: 'Llamadas',     icon: 'llamadas',  rx: 8  },
+  recepcion: { x: 570, y: 310, w: 210, h: 145, color: C.recepcion, label: 'Recepción',    icon: 'recepcion', rx: 6  },
+  turnos:    { x: 290, y: 420, w: 170, h: 105, color: C.turnos,    label: 'Turnos',       icon: 'turnos',    rx: 16 },
+  /* CAMBIO 4 — Sitios web: y:175 evita overlap con bots (bots bottom=150, gap=25px) */
+  sitios:    { x: 540, y: 175, w: 175, h: 120, color: C.sitios,    label: 'Sitios web',   icon: 'sitios',    rx: 2  },
 };
 
 const HUB = { cx: 430, cy: 270 };
 
-/* Cables: bezier desde nodo del módulo al hub */
+/* Cables: bezier desde nodo del módulo al hub — actualizados para nuevas posiciones */
 const CABLES: Record<ModuleKey, string> = {
-  mostrador: `M160,130 C160,210 ${HUB.cx},200 ${HUB.cx},${HUB.cy}`,
-  bots:      `M700,130 C700,210 ${HUB.cx},200 ${HUB.cx},${HUB.cy}`,
-  llamadas:  `M160,400 C160,330 ${HUB.cx},340 ${HUB.cx},${HUB.cy}`,
-  recepcion: `M700,400 C700,330 ${HUB.cx},340 ${HUB.cx},${HUB.cy}`,
-  turnos:    `M385,425 C385,375 ${HUB.cx},360 ${HUB.cx},${HUB.cy}`,
-  /* CAMBIO 4 — cable sitios */
-  sitios:    `M675,440 C675,380 ${HUB.cx},360 ${HUB.cx},${HUB.cy}`,
+  mostrador: `M265,112 C350,112 ${HUB.cx},200 ${HUB.cx},${HUB.cy}`,
+  bots:      `M580,130 C500,130 ${HUB.cx},200 ${HUB.cx},${HUB.cy}`,
+  llamadas:  `M220,390 C310,390 ${HUB.cx},340 ${HUB.cx},${HUB.cy}`,
+  recepcion: `M570,382 C500,382 ${HUB.cx},340 ${HUB.cx},${HUB.cy}`,
+  turnos:    `M375,420 C375,370 ${HUB.cx},330 ${HUB.cx},${HUB.cy}`,
+  sitios:    `M540,280 C490,280 ${HUB.cx},310 ${HUB.cx},${HUB.cy}`,
 };
 
-/* Punto de conexión visible (nodo iluminado) en el módulo */
+/* Punto de conexión visible (nodo iluminado) en el módulo — nuevas coords */
 const NODES: Record<ModuleKey, { cx: number; cy: number }> = {
-  mostrador: { cx: 160, cy: 130 },
-  bots:      { cx: 700, cy: 130 },
-  llamadas:  { cx: 160, cy: 400 },
-  recepcion: { cx: 700, cy: 400 },
-  turnos:    { cx: 385, cy: 425 },
-  sitios:    { cx: 675, cy: 440 },
+  mostrador: { cx: 265, cy: 112 },
+  bots:      { cx: 580, cy: 130 },
+  llamadas:  { cx: 220, cy: 390 },
+  recepcion: { cx: 570, cy: 382 },
+  turnos:    { cx: 375, cy: 420 },
+  sitios:    { cx: 540, cy: 280 },
 };
 
 /* Duración del loop de la partícula por cable */
@@ -198,7 +198,8 @@ function ModuleIcon({ type, color, x, y }: { type: string; color: string; x: num
    ControlRoomScene — HUD de servicios con entrada única y panel rotativo
 ══════════════════════════════════════════════════════════════════ */
 export default function ControlRoomScene() {
-  const t = useTranslations('room');
+  const t     = useTranslations('room');
+  const tSvc  = useTranslations('services');
   const containerRef = useRef<HTMLDivElement>(null);
 
   /* CAMBIO 1 — entrada única con useInView */
@@ -378,7 +379,7 @@ export default function ControlRoomScene() {
                 <RoomModule
                   m={m}
                   borderOpacity={borderOp}
-                  tagline={t(`services.items.${key}.tagline`)}
+                  tagline={tSvc(`items.${key}.tagline`)}
                   textVisible={postEntry}
                   taglineDelay={idx * 0.12}
                 />
@@ -564,13 +565,14 @@ export default function ControlRoomScene() {
 interface ModuleDef {
   x: number; y: number; w: number; h: number;
   color: string; icon: string; label: string;
+  /** CAMBIO 3 — radio de borde con personalidad por módulo */
+  rx: number;
 }
 
 interface RoomModuleProps {
   m: ModuleDef;
   /** Opacidad del borde: 0.4 normal, 0.8 cuando está hovered */
   borderOpacity: number;
-  /** CAMBIO 3 — tagline del servicio */
   tagline: string;
   textVisible: boolean;
   taglineDelay: number;
@@ -588,11 +590,11 @@ function RoomModule({ m, borderOpacity, tagline, textVisible, taglineDelay }: Ro
   return (
     <>
       {/* Sombra glow */}
-      <rect x={m.x + 4} y={m.y + 4} width={m.w} height={m.h} rx="7"
+      <rect x={m.x + 4} y={m.y + 4} width={m.w} height={m.h} rx={m.rx}
         style={{ fill: m.color.replace(')', ' / 0.1)'), filter: 'url(#mod-glow)' }}
       />
       {/* Fondo glassmorphism */}
-      <rect x={m.x} y={m.y} width={m.w} height={m.h} rx="6"
+      <rect x={m.x} y={m.y} width={m.w} height={m.h} rx={m.rx}
         style={{
           fill: 'oklch(12% 0.013 260)',
           stroke: m.color.replace(')', ` / ${borderOpacity})`),
@@ -601,7 +603,7 @@ function RoomModule({ m, borderOpacity, tagline, textVisible, taglineDelay }: Ro
         }}
       />
       {/* Línea superior de acento */}
-      <rect x={m.x + 1} y={m.y + 1} width={m.w - 2} height="1" rx="1"
+      <rect x={m.x + 1} y={m.y + 1} width={m.w - 2} height="1" rx={Math.min(m.rx, 4)}
         style={{ fill: m.color.replace(')', ' / 0.4)') }}
       />
       {/* Área de datos */}
