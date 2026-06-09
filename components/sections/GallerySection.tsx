@@ -102,7 +102,7 @@ function TextureFrame({
           position: 'absolute',
           inset: 0,
           borderRadius: 16,
-          border: `2px solid ${c(0.25)}`,
+          border: `2px solid ${c(0.5)}`,
           pointerEvents: 'none',
           zIndex: 2,
         }}
@@ -133,8 +133,8 @@ function TextureFrame({
         style={{
           borderRadius: 15,
           background: isActive
-            ? 'oklch(13% 0.012 260 / 0.92)'
-            : 'oklch(10% 0.01 260 / 0.85)',
+            ? 'oklch(16% 0.016 260 / 0.95)'
+            : 'oklch(14% 0.014 260 / 0.92)',
           boxShadow: isActive
             ? `0 0 60px ${c(0.25)}, 0 20px 60px rgba(0,0,0,0.6)`
             : `0 0 30px ${c(0.12)}, 0 20px 60px rgba(0,0,0,0.5)`,
@@ -160,61 +160,61 @@ function TextureFrame({
 
 // ── Artwork SVG por servicio ───────────────────────────────────
 function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
-  const a = (o: number) => color.replace('1)', `${o})`);
+  const a = (o: number) => color.replace('1)', `${Math.min(1, o)})`);
   if (id === 'mostrador') return (
     <svg viewBox="0 0 120 80" className="w-full h-full">
-      {[0,1,2,3].map(i => <rect key={i} x="8" y={8+i*18} width={55+i*14} height="11" rx="5.5" style={{ fill: i===0 ? color : a(0.5+i*0.1) }} />)}
-      <circle cx="100" cy="40" r="16" style={{ fill: a(0.12), stroke: color, strokeWidth: 1.5 }} />
+      {[0,1,2,3].map(i => <rect key={i} x="8" y={8+i*18} width={55+i*14} height="11" rx="5.5" style={{ fill: i===0 ? color : a(1.0) }} />)}
+      <circle cx="100" cy="40" r="16" style={{ fill: a(0.24), stroke: color, strokeWidth: 1.5 }} />
       <text x="100" y="45" textAnchor="middle" style={{ fill: color, fontSize: 16, fontFamily: 'sans-serif' }}>✓</text>
     </svg>
   );
   if (id === 'bots') return (
     <svg viewBox="0 0 120 80" className="w-full h-full">
-      <rect x="8" y="8" width="72" height="20" rx="10" style={{ fill: a(0.7) }} />
-      <rect x="40" y="36" width="72" height="20" rx="10" style={{ fill: a(0.18), stroke: color, strokeWidth: 1 }} />
-      <rect x="8" y="58" width="56" height="16" rx="8" style={{ fill: a(0.55) }} />
+      <rect x="8" y="8" width="72" height="20" rx="10" style={{ fill: color }} />
+      <rect x="40" y="36" width="72" height="20" rx="10" style={{ fill: a(0.36), stroke: color, strokeWidth: 1 }} />
+      <rect x="8" y="58" width="56" height="16" rx="8" style={{ fill: color }} />
       <circle cx="96" cy="18" r="6" style={{ fill: color }} />
     </svg>
   );
   if (id === 'llamadas') return (
     <svg viewBox="0 0 120 80" className="w-full h-full">
-      {[8,20,32,22,14,28,18].map((h,i) => <rect key={i} x={8+i*16} y={40-h} width="10" height={h*2} rx="5" style={{ fill: color, opacity: 0.3+(i%3)*0.25 }} />)}
-      <line x1="6" y1="40" x2="114" y2="40" style={{ stroke: color, strokeWidth: 0.5, opacity: 0.3 }} />
+      {[8,20,32,22,14,28,18].map((h,i) => <rect key={i} x={8+i*16} y={40-h} width="10" height={h*2} rx="5" style={{ fill: color, opacity: Math.min(1, 0.6+(i%3)*0.5) }} />)}
+      <line x1="6" y1="40" x2="114" y2="40" style={{ stroke: color, strokeWidth: 0.5, opacity: 0.6 }} />
     </svg>
   );
   if (id === 'recepcion') return (
     <svg viewBox="0 0 120 80" className="w-full h-full">
-      <circle cx="60" cy="40" r="28" style={{ fill: a(0.1), stroke: color, strokeWidth: 1.5 }} />
+      <circle cx="60" cy="40" r="28" style={{ fill: a(0.2), stroke: color, strokeWidth: 1.5 }} />
       <circle cx="60" cy="40" r="16" style={{ fill: 'oklch(10% 0.01 260)', stroke: color, strokeWidth: 1 }} />
       <circle cx="60" cy="40" r="5" style={{ fill: color }} />
       {[0,60,120,180,240,300].map(deg => (
         <line key={deg}
           x1={60+20*Math.cos(deg*Math.PI/180)} y1={40+20*Math.sin(deg*Math.PI/180)}
           x2={60+28*Math.cos(deg*Math.PI/180)} y2={40+28*Math.sin(deg*Math.PI/180)}
-          style={{ stroke: color, strokeWidth: 1.5, opacity: 0.6 }} />
+          style={{ stroke: color, strokeWidth: 1.5, opacity: 1 }} />
       ))}
     </svg>
   );
   if (id === 'sitios') return (
     <svg viewBox="0 0 120 80" className="w-full h-full">
       {/* Browser window */}
-      <rect x="6" y="6" width="108" height="68" rx="7" style={{ fill: a(0.08), stroke: color, strokeWidth: 1.5 }} />
+      <rect x="6" y="6" width="108" height="68" rx="7" style={{ fill: a(0.16), stroke: color, strokeWidth: 1.5 }} />
       {/* Barra superior */}
-      <rect x="6" y="6" width="108" height="18" rx="7" style={{ fill: a(0.22) }} />
-      <rect x="6" y="18" width="108" height="6" style={{ fill: a(0.12) }} />
+      <rect x="6" y="6" width="108" height="18" rx="7" style={{ fill: a(0.44) }} />
+      <rect x="6" y="18" width="108" height="6" style={{ fill: a(0.24) }} />
       {/* Traffic lights */}
       <circle cx="20" cy="15" r="3.5" style={{ fill: 'rgba(255,95,87,0.9)' }} />
       <circle cx="31" cy="15" r="3.5" style={{ fill: 'rgba(255,189,46,0.9)' }} />
       <circle cx="42" cy="15" r="3.5" style={{ fill: 'rgba(40,200,64,0.9)' }} />
       {/* URL bar */}
-      <rect x="55" y="10" width="48" height="10" rx="5" style={{ fill: a(0.18), stroke: color, strokeWidth: 0.8 }} />
+      <rect x="55" y="10" width="48" height="10" rx="5" style={{ fill: a(0.36), stroke: color, strokeWidth: 0.8 }} />
       {/* Contenido: hero headline */}
-      <rect x="14" y="32" width="60" height="8" rx="4" style={{ fill: color, opacity: 0.9 }} />
-      <rect x="14" y="44" width="45" height="6" rx="3" style={{ fill: color, opacity: 0.5 }} />
+      <rect x="14" y="32" width="60" height="8" rx="4" style={{ fill: color, opacity: 1 }} />
+      <rect x="14" y="44" width="45" height="6" rx="3" style={{ fill: color, opacity: 1 }} />
       {/* CTA button */}
-      <rect x="14" y="55" width="28" height="12" rx="6" style={{ fill: color, opacity: 0.85 }} />
+      <rect x="14" y="55" width="28" height="12" rx="6" style={{ fill: color, opacity: 1 }} />
       {/* Imagen derecha */}
-      <rect x="82" y="30" width="26" height="36" rx="4" style={{ fill: a(0.2), stroke: color, strokeWidth: 1 }} />
+      <rect x="82" y="30" width="26" height="36" rx="4" style={{ fill: a(0.4), stroke: color, strokeWidth: 1 }} />
     </svg>
   );
   /* turnos — default */
@@ -222,7 +222,7 @@ function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
     <svg viewBox="0 0 120 80" className="w-full h-full">
       {[0,1,2,3].map(row => [0,1,2,3,4].map(col => (
         <rect key={`${row}-${col}`} x={6+col*24} y={6+row*18} width="18" height="12" rx="3"
-          style={{ fill: (row+col)%3===0 ? color : a(0.25), opacity: (row+col)%3===0 ? 0.9 : 0.4 }} />
+          style={{ fill: (row+col)%3===0 ? color : a(0.5), opacity: (row+col)%3===0 ? 1 : 0.8 }} />
       )))}
     </svg>
   );
