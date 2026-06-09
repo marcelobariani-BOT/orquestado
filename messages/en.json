@@ -17,11 +17,6 @@
     "buildingLabel": "Building your control room",
     "stages": [
       {
-        "label": "Foundation",
-        "heading": "Everything starts\nwith an empty room",
-        "body": "Before automating you need infrastructure. We build it from scratch."
-      },
-      {
         "label": "Order channel",
         "heading": "Mi Mostrador\nenters the scene",
         "body": "The platform receives orders from WhatsApp, web and delivery. No calls. No paper."
@@ -34,7 +29,12 @@
       {
         "label": "Smart voice",
         "heading": "Calls that\nmanage themselves",
-        "body": "Outbound for campaigns and collections. Inbound for routing and scheduling."
+        "body": "Automated AI campaigns. Reminders, collections and follow-ups without operators."
+      },
+      {
+        "label": "Call reception",
+        "heading": "Never miss\na call again",
+        "body": "An AI receptionist that answers, classifies and routes incoming calls to the right area."
       },
       {
         "label": "Appointment management",
@@ -42,10 +42,9 @@
         "body": "Bookings by WhatsApp or voice. Automatic confirmation, reminders and cancellations."
       },
       {
-        "label": "System active",
-        "heading": "Your room\nis operational",
-        "body": "All channels connected to the Orquestado core. The system works. You supervise.",
-        "cta": "Explore each service"
+        "label": "Digital presence",
+        "heading": "Your website\nthat converts",
+        "body": "Landing pages, e-commerce and integrated automations. Your digital presence working for you."
       }
     ]
   },
@@ -103,7 +102,7 @@
         "number": "06",
         "tagline": "Your digital presence, frictionless.",
         "description": "We design and develop landing pages, e-commerce and custom web apps. Fast, accessible and conversion-optimized.",
-        "features": ["High-conversion landing pages", "Online stores and e-commerce", "Custom web applications", "Technical SEO included"],
+        "features": ["High-conversion landing pages", "Online stores and e-commerce", "Bot and automation integration", "Technical SEO included"],
         "cta": "See portfolio"
       }
     }

@@ -17,11 +17,6 @@
     "buildingLabel": "Construyendo tu sala de control",
     "stages": [
       {
-        "label": "Los cimientos",
-        "heading": "Todo empieza\ncon una sala vacía",
-        "body": "Antes de automatizar necesitás infraestructura. Nosotros la construimos desde cero."
-      },
-      {
         "label": "Canal de pedidos",
         "heading": "Mi Mostrador\nentra en escena",
         "body": "La plataforma recibe pedidos desde WhatsApp, web y delivery. Sin llamadas. Sin papel."
@@ -32,9 +27,14 @@
         "body": "Responde al instante, califica leads y escala a humano solo cuando hace falta."
       },
       {
-        "label": "Voz inteligente",
+        "label": "Voz saliente",
         "heading": "Llamadas que\nse gestionan solas",
-        "body": "Salientes para campañas y cobranzas. Entrantes para derivación y agenda."
+        "body": "Campañas automáticas con IA. Recordatorios, cobranzas y seguimientos sin operadores."
+      },
+      {
+        "label": "Recepción de llamadas",
+        "heading": "Nunca más un\nllamado sin atender",
+        "body": "Un recepcionista de IA que atiende, clasifica y deriva llamadas entrantes al área correcta."
       },
       {
         "label": "Gestión de turnos",
@@ -42,10 +42,9 @@
         "body": "Reservas por WhatsApp o voz. Confirmación, recordatorio y cancelación automáticos."
       },
       {
-        "label": "Sistema activo",
-        "heading": "Tu sala\nestá operativa",
-        "body": "Todos los canales conectados al núcleo de Orquestado. El sistema trabaja. Vos supervisás.",
-        "cta": "Conocer cada servicio"
+        "label": "Presencia digital",
+        "heading": "Tu sitio web\nque convierte",
+        "body": "Landing pages, e-commerce y automatizaciones integradas. Tu presencia digital trabajando para vos."
       }
     ]
   },
@@ -103,7 +102,7 @@
         "number": "06",
         "tagline": "Tu presencia digital, sin fricciones.",
         "description": "Diseñamos y desarrollamos landing pages, e-commerce y aplicaciones web a medida. Rápidos, accesibles y optimizados para convertir.",
-        "features": ["Landing pages de alta conversión", "Tiendas online y e-commerce", "Aplicaciones web a medida", "SEO técnico incluido"],
+        "features": ["Landing pages de alta conversión", "E-commerce y tiendas online", "Integración de bots y automatizaciones", "SEO técnico incluido"],
         "cta": "Ver portfolio"
       }
     }
