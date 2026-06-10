@@ -104,7 +104,7 @@ function TextureFrame({
           position: 'absolute',
           inset: 0,
           borderRadius: 16,
-          border: `4px solid ${c(0.6)}`,
+          border: `6px solid ${c(0.8)}`,
           pointerEvents: 'none',
           zIndex: 2,
         }}
