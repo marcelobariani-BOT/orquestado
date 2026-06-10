@@ -129,7 +129,7 @@ function TextureFrame({
 
       {/* ④ Superficie interior: card=absolute, overlay=flow normal */}
       <div
-        className={variant === 'card' ? 'absolute inset-[1px] overflow-hidden' : 'relative overflow-hidden'}
+        className={variant === 'card' ? 'absolute inset-[4px] overflow-hidden' : 'relative overflow-hidden'}
         style={{
           ...(variant === 'overlay' && { margin: '1px' }),
           borderRadius: 15,
