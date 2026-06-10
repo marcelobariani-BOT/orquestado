@@ -312,7 +312,6 @@ const Carousel = memo((
               }}
             >
               <motion.div
-                layoutId={`service-card-${id}`}
                 className="w-full cursor-pointer"
                 style={{ height: isSmall ? 260 : 320 }}
                 initial={{ filter: 'blur(4px)' }}
@@ -347,9 +346,9 @@ function ServiceOverlay({
   const cta = t(`services.items.${id}.cta`);
   const c = (a: number) => color.replace('1)', `${a})`);
 
+  console.log('[gallery] ServiceOverlay rendering', id);
   return (
     <motion.div
-      layoutId={`service-card-${id}`}
       className="fixed z-50 overflow-hidden flex flex-col"
       style={{
         top: '50%', left: '50%',
@@ -358,6 +357,9 @@ function ServiceOverlay({
         maxHeight: '85vh',
         height: 'auto',
       }}
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
       transition={TRANSITION_OVERLAY}
     >
       <TextureFrame color={color} isActive={true}>
@@ -416,6 +418,7 @@ export default function GallerySection() {
   const controls = useAnimation();
 
   const handleClick = (id: ServiceKey) => {
+    console.log('[gallery] handleClick disparado', id);
     setActiveId(id);
     setIsCarouselActive(false);
     controls.stop();
