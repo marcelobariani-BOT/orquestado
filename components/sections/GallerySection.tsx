@@ -52,11 +52,13 @@ function TextureFrame({
   color,
   isActive,
   animationSpeed = 'slow',
+  variant = 'card',
 }: {
   children: React.ReactNode;
   color: string;
   isActive: boolean;
   animationSpeed?: 'slow' | 'fast';
+  variant?: 'card' | 'overlay';
 }) {
   const c = (a: number) => color.replace('1)', `${a})`);
   const spinDur = SPIN_DURATION[animationSpeed];
@@ -64,8 +66,8 @@ function TextureFrame({
 
   return (
     <div
-      className="relative w-full"
-      style={{ borderRadius: 16, overflow: 'hidden', minHeight: '100%' }}
+      className={variant === 'card' ? 'relative w-full h-full' : 'relative w-full'}
+      style={{ borderRadius: 16, overflow: 'hidden' }}
     >
       {/* Keyframes — off-JS-thread */}
       <style>{`
@@ -102,7 +104,7 @@ function TextureFrame({
           position: 'absolute',
           inset: 0,
           borderRadius: 16,
-          border: `2px solid ${c(0.5)}`,
+          border: `4px solid ${c(0.6)}`,
           pointerEvents: 'none',
           zIndex: 2,
         }}
@@ -125,11 +127,11 @@ function TextureFrame({
         } as React.CSSProperties}
       />
 
-      {/* ④ Superficie interior: en flow normal para que el contenido determine la altura */}
+      {/* ④ Superficie interior: card=absolute, overlay=flow normal */}
       <div
-        className="relative overflow-hidden"
+        className={variant === 'card' ? 'absolute inset-[1px] overflow-hidden' : 'relative overflow-hidden'}
         style={{
-          margin: '1px',
+          ...(variant === 'overlay' && { margin: '1px' }),
           borderRadius: 15,
           background: isActive
             ? 'oklch(16% 0.016 260 / 0.95)'
@@ -321,7 +323,7 @@ const Carousel = memo((
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
                 onTap={(e) => { e.stopPropagation(); handleClick(id); }}
               >
-                <TextureFrame color={color} isActive={false}>
+                <TextureFrame color={color} isActive={false} variant="card">
                   <ServiceFaceCard id={id} color={color} name={name} number={number} tagline={tagline} />
                 </TextureFrame>
               </motion.div>
@@ -361,7 +363,7 @@ function ServiceOverlay({
       exit={{ opacity: 0, scale: 0.9 }}
       transition={TRANSITION_OVERLAY}
     >
-      <TextureFrame color={color} isActive={true}>
+      <TextureFrame color={color} isActive={true} variant="overlay">
         <div className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
           <div className="flex items-start justify-between p-6 pb-4 border-b"
             style={{ borderColor: c(0.15) }}>
