@@ -319,7 +319,7 @@ const Carousel = memo((
                 animate={{ filter: 'blur(0px)' }}
                 transition={TRANSITION}
                 whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
-                onTap={() => handleClick(id)}
+                onTap={(e) => { e.stopPropagation(); handleClick(id); }}
               >
                 <TextureFrame color={color} isActive={false}>
                   <ServiceFaceCard id={id} color={color} name={name} number={number} tagline={tagline} />
