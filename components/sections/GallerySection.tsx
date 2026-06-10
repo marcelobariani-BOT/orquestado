@@ -64,8 +64,8 @@ function TextureFrame({
 
   return (
     <div
-      className="relative w-full h-full"
-      style={{ borderRadius: 16, overflow: 'hidden' }}
+      className="relative w-full"
+      style={{ borderRadius: 16, overflow: 'hidden', minHeight: '100%' }}
     >
       {/* Keyframes — off-JS-thread */}
       <style>{`
@@ -125,10 +125,11 @@ function TextureFrame({
         } as React.CSSProperties}
       />
 
-      {/* ④ Superficie interior: contenido de la card, encima de todo */}
+      {/* ④ Superficie interior: en flow normal para que el contenido determine la altura */}
       <div
-        className="absolute inset-[1px] overflow-hidden"
+        className="relative overflow-hidden"
         style={{
+          margin: '1px',
           borderRadius: 15,
           background: isActive
             ? 'oklch(16% 0.016 260 / 0.95)'
@@ -348,16 +349,12 @@ function ServiceOverlay({
 
   return (
     <motion.div
-      data-debug="overlay"
       className="fixed z-50 overflow-hidden flex flex-col"
       style={{
         top: '50%', left: '50%',
         x: '-50%', y: '-50%',
         width: 'min(640px, 90vw)',
         maxHeight: '85vh',
-        minHeight: '500px',
-        background: 'red',
-        border: '5px solid lime',
       }}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -365,7 +362,7 @@ function ServiceOverlay({
       transition={TRANSITION_OVERLAY}
     >
       <TextureFrame color={color} isActive={true}>
-        <div data-debug="overlay-content" className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
+        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
           <div className="flex items-start justify-between p-6 pb-4 border-b"
             style={{ borderColor: c(0.15) }}>
             <div>
