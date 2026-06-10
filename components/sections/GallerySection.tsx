@@ -346,7 +346,6 @@ function ServiceOverlay({
   const cta = t(`services.items.${id}.cta`);
   const c = (a: number) => color.replace('1)', `${a})`);
 
-  console.log('[gallery] ServiceOverlay rendering', id);
   return (
     <motion.div
       className="fixed z-50 overflow-hidden flex flex-col"
@@ -355,7 +354,7 @@ function ServiceOverlay({
         x: '-50%', y: '-50%',
         width: 'min(640px, 90vw)',
         maxHeight: '85vh',
-        height: 'auto',
+        minHeight: '500px',
       }}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -418,7 +417,6 @@ export default function GallerySection() {
   const controls = useAnimation();
 
   const handleClick = (id: ServiceKey) => {
-    console.log('[gallery] handleClick disparado', id);
     setActiveId(id);
     setIsCarouselActive(false);
     controls.stop();
