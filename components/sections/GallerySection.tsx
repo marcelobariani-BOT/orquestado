@@ -91,7 +91,7 @@ function TextureFrame({
           width: '150%',
           height: '150%',
           animation: `spin-border ${spinDur} linear infinite`,
-          background: `conic-gradient(from 0deg, transparent 0%, transparent 60%, ${c(0.9)} 80%, transparent 100%)`,
+          background: `conic-gradient(from 0deg, transparent 0%, transparent 60%, ${c(0.3)} 80%, transparent 100%)`,
           pointerEvents: 'none',
           zIndex: 1,
         }}
@@ -104,7 +104,7 @@ function TextureFrame({
           position: 'absolute',
           inset: 0,
           borderRadius: 16,
-          border: `6px solid ${c(0.8)}`,
+          border: `3px solid ${c(1.0)}`,
           pointerEvents: 'none',
           zIndex: 2,
         }}
