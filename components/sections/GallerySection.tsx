@@ -4,7 +4,7 @@
 // Fuente frame: https://github.com/nolly-studio/cult-ui/blob/main/apps/www/registry/default/ui/texture-card.tsx
 // Adaptados para servicios de Orquesta (dark mode, service data, sin imágenes externas)
 
-import { memo, useEffect, useLayoutEffect, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useAnimation, useMotionValue, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import FadeIn from '@/components/animations/FadeIn';
@@ -284,6 +284,9 @@ const Carousel = memo((
   const rotation = useMotionValue(0);
   const transform = useTransform(rotation, (v) => `rotate3d(0, 1, 0, ${v}deg)`);
 
+  /* Guard: evita abrir el overlay cuando el usuario estaba arrastrando */
+  const isDragging = useRef(false);
+
   return (
     <div
       className="flex h-full items-center justify-center"
@@ -293,16 +296,20 @@ const Carousel = memo((
         drag={isCarouselActive ? 'x' : false}
         className="relative flex h-full origin-center cursor-grab justify-center active:cursor-grabbing"
         style={{ transform, rotateY: rotation, width: cylinderWidth, transformStyle: 'preserve-3d' }}
+        onDragStart={() => { isDragging.current = true; }}
         onDrag={(_, info) =>
           isCarouselActive && rotation.set(rotation.get() + info.delta.x * 0.3)
         }
-        onDragEnd={(_, info) =>
-          isCarouselActive &&
-          controls.start({
-            rotateY: rotation.get() + info.velocity.x * 0.015,
-            transition: { type: 'spring', stiffness: 100, damping: 30, mass: 0.1 },
-          })
-        }
+        onDragEnd={(_, info) => {
+          /* resetear drag flag con delay para que el onClick del hijo no lo vea */
+          setTimeout(() => { isDragging.current = false; }, 100);
+          if (isCarouselActive) {
+            controls.start({
+              rotateY: rotation.get() + info.velocity.x * 0.015,
+              transition: { type: 'spring', stiffness: 100, damping: 30, mass: 0.1 },
+            });
+          }
+        }}
         animate={controls}
       >
         {services.map((id, i) => {
@@ -319,7 +326,7 @@ const Carousel = memo((
                 width: `${faceWidth}px`,
                 transform: `rotateY(${i * (360 / faceCount)}deg) translateZ(${radius}px)`,
               }}
-              onClick={() => handleClick(id)}
+              onClick={() => { if (!isDragging.current) handleClick(id); }}
             >
               <motion.div
                 layoutId={`service-card-${id}`}
@@ -425,6 +432,7 @@ export default function GallerySection() {
   const controls = useAnimation();
 
   const handleClick = (id: ServiceKey) => {
+    console.log('clicked', id);
     setActiveId(id);
     setIsCarouselActive(false);
     controls.stop();
