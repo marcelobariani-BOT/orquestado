@@ -348,6 +348,7 @@ function ServiceOverlay({
 
   return (
     <motion.div
+      data-debug="overlay"
       className="fixed z-50 overflow-hidden flex flex-col"
       style={{
         top: '50%', left: '50%',
@@ -355,6 +356,8 @@ function ServiceOverlay({
         width: 'min(640px, 90vw)',
         maxHeight: '85vh',
         minHeight: '500px',
+        background: 'red',
+        border: '5px solid lime',
       }}
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -362,7 +365,7 @@ function ServiceOverlay({
       transition={TRANSITION_OVERLAY}
     >
       <TextureFrame color={color} isActive={true}>
-        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
+        <div data-debug="overlay-content" className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
           <div className="flex items-start justify-between p-6 pb-4 border-b"
             style={{ borderColor: c(0.15) }}>
             <div>
