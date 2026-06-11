@@ -439,7 +439,7 @@ export default function GallerySection() {
   };
 
   return (
-    <section className="relative overflow-hidden" id="services">
+    <section className="relative overflow-visible" id="services">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{
           background: 'linear-gradient(180deg, oklch(14% 0.014 45) 0%, oklch(9.5% 0.01 50) 20%, oklch(7.5% 0.008 260) 55%, oklch(5.5% 0.006 260) 100%)',
@@ -480,7 +480,7 @@ export default function GallerySection() {
         <motion.div layout className="relative h-[380px] sm:h-[430px] w-full overflow-visible">
           {/* Lava ball izquierda — mix-blend screen elimina el fondo negro del canvas */}
           <div style={{
-            position: 'absolute', left: 0, top: '50%',
+            position: 'absolute', left: '20px', top: '50%',
             transform: 'translateY(-50%)',
             pointerEvents: 'none', zIndex: 0,
             width: 220, height: 220,
@@ -491,7 +491,7 @@ export default function GallerySection() {
           </div>
           {/* Lava ball derecha */}
           <div style={{
-            position: 'absolute', right: 0, top: '50%',
+            position: 'absolute', right: '20px', top: '50%',
             transform: 'translateY(-50%)',
             pointerEvents: 'none', zIndex: 0,
             width: 220, height: 220,
