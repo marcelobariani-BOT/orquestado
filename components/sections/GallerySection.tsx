@@ -9,6 +9,7 @@ import { AnimatePresence, motion, useAnimation, useMotionValue, useTransform } f
 import { useTranslations } from 'next-intl';
 import FadeIn from '@/components/animations/FadeIn';
 import Button from '@/components/ui/Button';
+import PlasmaBallGL from '@/components/ui/PlasmaBallGL';
 
 // ── useMediaQuery ────────────────────────────────────────────
 const IS_SERVER = typeof window === 'undefined';
@@ -364,7 +365,15 @@ function ServiceOverlay({
       transition={TRANSITION_OVERLAY}
     >
       <TextureFrame color={color} isActive={true} variant="overlay">
-        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)' }}>
+        {/* Plasma WebGL como fondo atmosférico */}
+        <div aria-hidden style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          opacity: 0.15, pointerEvents: 'none',
+          overflow: 'hidden', borderRadius: 15,
+        }}>
+          <PlasmaBallGL size={600} style={{ width: '100%', height: '100%' }} />
+        </div>
+        <div className="flex flex-col overflow-y-auto" style={{ maxHeight: 'calc(85vh - 36px)', position: 'relative', zIndex: 1 }}>
           <div className="flex items-start justify-between p-6 pb-4 border-b"
             style={{ borderColor: c(0.15) }}>
             <div>
