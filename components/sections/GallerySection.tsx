@@ -482,7 +482,7 @@ export default function GallerySection() {
           <div style={{
             position: 'absolute', left: '-60px', top: '50%',
             transform: 'translateY(-50%)', opacity: 0.18,
-            pointerEvents: 'none', zIndex: 0,
+            pointerEvents: 'none', zIndex: 0, width: 180, height: 180,
           }}>
             <PlasmaBallGL size={180} />
           </div>
@@ -490,7 +490,7 @@ export default function GallerySection() {
           <div style={{
             position: 'absolute', right: '-60px', top: '50%',
             transform: 'translateY(-50%)', opacity: 0.18,
-            pointerEvents: 'none', zIndex: 0,
+            pointerEvents: 'none', zIndex: 0, width: 180, height: 180,
           }}>
             <PlasmaBallGL size={180} />
           </div>
