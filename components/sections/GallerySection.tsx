@@ -477,7 +477,24 @@ export default function GallerySection() {
           </FadeIn>
         </div>
 
-        <motion.div layout className="relative h-[380px] sm:h-[430px] w-full overflow-hidden">
+        <motion.div layout className="relative h-[380px] sm:h-[430px] w-full overflow-visible">
+          {/* Lava ball izquierda */}
+          <div style={{
+            position: 'absolute', left: '-60px', top: '50%',
+            transform: 'translateY(-50%)', opacity: 0.18,
+            pointerEvents: 'none', zIndex: 0,
+          }}>
+            <PlasmaBallGL size={180} />
+          </div>
+          {/* Lava ball derecha */}
+          <div style={{
+            position: 'absolute', right: '-60px', top: '50%',
+            transform: 'translateY(-50%)', opacity: 0.18,
+            pointerEvents: 'none', zIndex: 0,
+          }}>
+            <PlasmaBallGL size={180} />
+          </div>
+          <div style={{ position: 'relative', zIndex: 1, height: '100%' }}>
           <Carousel
             handleClick={handleClick}
             controls={controls}
@@ -485,6 +502,7 @@ export default function GallerySection() {
             isCarouselActive={isCarouselActive}
             t={t}
           />
+          </div>
         </motion.div>
 
         <FadeIn direction="up" delay={0.4} className="flex justify-center mt-8">
