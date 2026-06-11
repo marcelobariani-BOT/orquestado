@@ -480,7 +480,7 @@ export default function GallerySection() {
         <motion.div layout className="relative h-[380px] sm:h-[430px] w-full overflow-visible">
           {/* Lava ball izquierda — mix-blend screen elimina el fondo negro del canvas */}
           <div style={{
-            position: 'absolute', left: '20px', top: '50%',
+            position: 'absolute', left: '15%', top: '50%',
             transform: 'translateY(-50%)',
             pointerEvents: 'none', zIndex: 0,
             width: 220, height: 220,
@@ -491,7 +491,7 @@ export default function GallerySection() {
           </div>
           {/* Lava ball derecha */}
           <div style={{
-            position: 'absolute', right: '20px', top: '50%',
+            position: 'absolute', right: '15%', top: '50%',
             transform: 'translateY(-50%)',
             pointerEvents: 'none', zIndex: 0,
             width: 220, height: 220,
