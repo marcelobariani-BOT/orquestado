@@ -478,21 +478,27 @@ export default function GallerySection() {
         </div>
 
         <motion.div layout className="relative h-[380px] sm:h-[430px] w-full overflow-visible">
-          {/* Lava ball izquierda */}
+          {/* Lava ball izquierda — mix-blend screen elimina el fondo negro del canvas */}
           <div style={{
-            position: 'absolute', left: '-60px', top: '50%',
-            transform: 'translateY(-50%)', opacity: 0.18,
-            pointerEvents: 'none', zIndex: 0, width: 180, height: 180,
+            position: 'absolute', left: 0, top: '50%',
+            transform: 'translateY(-50%)',
+            pointerEvents: 'none', zIndex: 0,
+            width: 220, height: 220,
+            mixBlendMode: 'screen',
+            opacity: 0.55,
           }}>
-            <PlasmaBallGL size={180} />
+            <PlasmaBallGL size={220} />
           </div>
           {/* Lava ball derecha */}
           <div style={{
-            position: 'absolute', right: '-60px', top: '50%',
-            transform: 'translateY(-50%)', opacity: 0.18,
-            pointerEvents: 'none', zIndex: 0, width: 180, height: 180,
+            position: 'absolute', right: 0, top: '50%',
+            transform: 'translateY(-50%)',
+            pointerEvents: 'none', zIndex: 0,
+            width: 220, height: 220,
+            mixBlendMode: 'screen',
+            opacity: 0.55,
           }}>
-            <PlasmaBallGL size={180} />
+            <PlasmaBallGL size={220} />
           </div>
           <div style={{ position: 'relative', zIndex: 1, height: '100%' }}>
           <Carousel
