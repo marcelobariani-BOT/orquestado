@@ -171,30 +171,62 @@ function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
     </svg>
   );
   if (id === 'bots') return (
+    /* Ventana de chat: burbujas alternas usuario/bot */
     <svg viewBox="0 0 120 80" className="w-full h-full">
-      <rect x="8" y="8" width="72" height="20" rx="10" style={{ fill: color }} />
-      <rect x="40" y="36" width="72" height="20" rx="10" style={{ fill: a(0.36), stroke: color, strokeWidth: 1 }} />
-      <rect x="8" y="58" width="56" height="16" rx="8" style={{ fill: color }} />
-      <circle cx="96" cy="18" r="6" style={{ fill: color }} />
+      {/* Burbuja bot (izq) */}
+      <rect x="8" y="6" width="62" height="14" rx="7" style={{ fill: a(0.22), stroke: color, strokeWidth: 1 }} />
+      <circle cx="8" cy="13" r="4" style={{ fill: color }} />
+      <rect x="12" y="9" width="28" height="3" rx="1.5" style={{ fill: color, opacity: 0.9 }} />
+      <rect x="12" y="14" width="18" height="3" rx="1.5" style={{ fill: color, opacity: 0.6 }} />
+      {/* Burbuja usuario (der) */}
+      <rect x="50" y="26" width="62" height="14" rx="7" style={{ fill: color, opacity: 0.85 }} />
+      <rect x="56" y="29" width="30" height="3" rx="1.5" style={{ fill: 'oklch(98% 0.005 260)', opacity: 0.9 }} />
+      <rect x="56" y="34" width="20" height="3" rx="1.5" style={{ fill: 'oklch(98% 0.005 260)', opacity: 0.6 }} />
+      {/* Burbuja bot (izq) — escribiendo */}
+      <rect x="8" y="46" width="44" height="14" rx="7" style={{ fill: a(0.22), stroke: color, strokeWidth: 1 }} />
+      <circle cx="8" cy="53" r="4" style={{ fill: color }} />
+      <circle cx="18" cy="53" r="2.2" style={{ fill: color, opacity: 0.5 }} />
+      <circle cx="25" cy="53" r="2.2" style={{ fill: color, opacity: 0.75 }} />
+      <circle cx="32" cy="53" r="2.2" style={{ fill: color }} />
+      {/* Línea de input inferior */}
+      <rect x="8" y="68" width="104" height="8" rx="4" style={{ fill: a(0.12), stroke: color, strokeWidth: 0.8 }} />
+      <rect x="98" y="69.5" width="10" height="5" rx="2.5" style={{ fill: color, opacity: 0.8 }} />
     </svg>
   );
   if (id === 'llamadas') return (
+    /* Teléfono levantado + ondas salientes */
     <svg viewBox="0 0 120 80" className="w-full h-full">
-      {[8,20,32,22,14,28,18].map((h,i) => <rect key={i} x={8+i*16} y={40-h} width="10" height={h*2} rx="5" style={{ fill: color, opacity: Math.min(1, 0.6+(i%3)*0.5) }} />)}
-      <line x1="6" y1="40" x2="114" y2="40" style={{ stroke: color, strokeWidth: 0.5, opacity: 0.6 }} />
+      {/* Auricular */}
+      <path d="M28,52 C28,38 36,26 48,22 L52,30 C44,33 40,40 40,52 Z"
+        style={{ fill: color, opacity: 0.9 }} />
+      <path d="M28,52 L22,66 C21,69 24,72 27,71 L40,66 C42,65 42,63 40,62 L36,58 C34,57 34,54 36,53 L40,52 Z"
+        style={{ fill: color }} />
+      <path d="M52,30 L62,24 C65,22 68,24 67,27 L64,40 C63,43 61,43 59,41 L56,37 C54,35 52,35 51,37 L48,42 C46,45 43,44 43,41 L44,36 Z"
+        style={{ fill: color, opacity: 0.85 }} />
+      {/* Ondas salientes */}
+      <path d="M68,28 Q76,36 68,52" fill="none" style={{ stroke: color, strokeWidth: 2, opacity: 0.7, strokeLinecap: 'round' }} />
+      <path d="M76,22 Q90,36 76,58" fill="none" style={{ stroke: color, strokeWidth: 1.5, opacity: 0.45, strokeLinecap: 'round' }} />
+      <path d="M84,16 Q104,36 84,64" fill="none" style={{ stroke: color, strokeWidth: 1, opacity: 0.25, strokeLinecap: 'round' }} />
     </svg>
   );
   if (id === 'recepcion') return (
+    /* Headset de perfil + señal entrante */
     <svg viewBox="0 0 120 80" className="w-full h-full">
-      <circle cx="60" cy="40" r="28" style={{ fill: a(0.2), stroke: color, strokeWidth: 1.5 }} />
-      <circle cx="60" cy="40" r="16" style={{ fill: 'oklch(10% 0.01 260)', stroke: color, strokeWidth: 1 }} />
-      <circle cx="60" cy="40" r="5" style={{ fill: color }} />
-      {[0,60,120,180,240,300].map(deg => (
-        <line key={deg}
-          x1={60+20*Math.cos(deg*Math.PI/180)} y1={40+20*Math.sin(deg*Math.PI/180)}
-          x2={60+28*Math.cos(deg*Math.PI/180)} y2={40+28*Math.sin(deg*Math.PI/180)}
-          style={{ stroke: color, strokeWidth: 1.5, opacity: 1 }} />
-      ))}
+      {/* Arco del headset */}
+      <path d="M34,42 C34,24 86,24 86,42" fill="none" style={{ stroke: color, strokeWidth: 3.5, strokeLinecap: 'round' }} />
+      {/* Orejera izquierda */}
+      <rect x="28" y="40" width="12" height="18" rx="6" style={{ fill: color, opacity: 0.9 }} />
+      {/* Orejera derecha */}
+      <rect x="80" y="40" width="12" height="18" rx="6" style={{ fill: color, opacity: 0.9 }} />
+      {/* Micrófono */}
+      <line x1="86" y1="55" x2="86" y2="66" style={{ stroke: color, strokeWidth: 2, strokeLinecap: 'round' }} />
+      <rect x="80" y="63" width="12" height="6" rx="3" style={{ fill: a(0.25), stroke: color, strokeWidth: 1 }} />
+      {/* Ondas entrantes (izquierda) */}
+      <path d="M22,36 Q14,42 22,52" fill="none" style={{ stroke: color, strokeWidth: 1.8, opacity: 0.7, strokeLinecap: 'round' }} />
+      <path d="M16,30 Q4,42 16,58" fill="none" style={{ stroke: color, strokeWidth: 1.2, opacity: 0.4, strokeLinecap: 'round' }} />
+      {/* Indicador "respondiendo" */}
+      <circle cx="60" cy="14" r="5" style={{ fill: a(0.2), stroke: color, strokeWidth: 1 }} />
+      <circle cx="60" cy="14" r="2" style={{ fill: color }} />
     </svg>
   );
   if (id === 'sitios') return (
@@ -210,6 +242,35 @@ function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
       <rect x="14" y="44" width="45" height="6" rx="3" style={{ fill: color, opacity: 1 }} />
       <rect x="14" y="55" width="28" height="12" rx="6" style={{ fill: color, opacity: 1 }} />
       <rect x="82" y="30" width="26" height="36" rx="4" style={{ fill: a(0.4), stroke: color, strokeWidth: 1 }} />
+    </svg>
+  );
+  if (id === 'turnos') return (
+    /* Calendario 4×3 con slots reservados + reloj */
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Marco calendario */}
+      <rect x="6" y="14" width="78" height="62" rx="5" style={{ fill: a(0.1), stroke: color, strokeWidth: 1.2 }} />
+      {/* Header del calendario */}
+      <rect x="6" y="14" width="78" height="14" rx="5" style={{ fill: a(0.35) }} />
+      <rect x="6" y="22" width="78" height="6" style={{ fill: a(0.35) }} />
+      {/* Pasadores */}
+      <rect x="22" y="10" width="6" height="10" rx="3" style={{ fill: color }} />
+      <rect x="56" y="10" width="6" height="10" rx="3" style={{ fill: color }} />
+      {/* Grilla días: 4 cols × 3 filas */}
+      {[0,1,2,3].map(col => [0,1,2].map(row => {
+        const marked = (col===1&&row===0)||(col===3&&row===0)||(col===0&&row===1)||(col===2&&row===2);
+        return (
+          <rect key={`${col}-${row}`}
+            x={12 + col*17} y={34 + row*13}
+            width="12" height="9" rx="2.5"
+            style={{ fill: marked ? color : a(0.15), opacity: marked ? 1 : 0.9 }}
+          />
+        );
+      }))}
+      {/* Reloj — esquina derecha */}
+      <circle cx="100" cy="38" r="16" style={{ fill: a(0.12), stroke: color, strokeWidth: 1.5 }} />
+      <line x1="100" y1="38" x2="100" y2="27" style={{ stroke: color, strokeWidth: 2, strokeLinecap: 'round' }} />
+      <line x1="100" y1="38" x2="109" y2="42" style={{ stroke: color, strokeWidth: 1.5, strokeLinecap: 'round' }} />
+      <circle cx="100" cy="38" r="2" style={{ fill: color }} />
     </svg>
   );
   return (
