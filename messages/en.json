@@ -1,7 +1,6 @@
 ﻿{
   "nav": {
     "services": "Services",
-    "mostrador": "Mi Mostrador",
     "contact": "Contact",
     "cta": "Request demo"
   },
@@ -34,5 +33,8 @@
       "sitios": {"name": "Web design","number": "06","tagline": "Your digital presence, frictionless.","description": "We design and develop landing pages, e-commerce and custom web apps. Fast, accessible and conversion-optimized.","features": ["High-conversion landing pages","Online stores and e-commerce","Bot and automation integration","Technical SEO included"],"cta": "See portfolio"}
     }
   },
-  "cta": {"heading": "Your business never sleeps.\nNow you can.","subheading": "Start in 48 hours. No long contracts. No internal IT.","primary": "Talk to an advisor","secondary": "Watch recorded demo","whatsapp": "Message on WhatsApp"}
+  "cta": {
+    "heading": "Your business running\nwhile you can't.",
+    "subheading": "No extra staff. No missed sales. AI that works for you."
+  }
 }

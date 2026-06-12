@@ -15,6 +15,8 @@ export default function NavBar() {
     setScrolled(y > 40);
   });
 
+  const linkClass = 'px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors rounded-lg hover:bg-[var(--bg-surface)]';
+
   return (
     <motion.header
       className={[
@@ -41,15 +43,16 @@ export default function NavBar() {
 
           {/* Links desktop */}
           <div className="hidden md:flex items-center gap-1">
-            {(['services', 'mostrador', 'contact'] as const).map((key) => (
-              <a
-                key={key}
-                href={`#${key}`}
-                className="px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors rounded-lg hover:bg-[var(--bg-surface)]"
-              >
-                {t(key)}
-              </a>
-            ))}
+            <a href="#services" className={linkClass}>{t('services')}</a>
+            <a
+              href="https://mimostrador.com.ar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={linkClass}
+            >
+              Mi Mostrador
+            </a>
+            <a href="#contact" className={linkClass}>{t('contact')}</a>
           </div>
 
           {/* CTA + mobile toggle */}
@@ -78,16 +81,29 @@ export default function NavBar() {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden pb-4 border-t border-[var(--border-subtle)] pt-4 flex flex-col gap-1"
           >
-            {(['services', 'mostrador', 'contact'] as const).map((key) => (
-              <a
-                key={key}
-                href={`#${key}`}
-                onClick={() => setMobileOpen(false)}
-                className="px-3 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-surface)]"
-              >
-                {t(key)}
-              </a>
-            ))}
+            <a
+              href="#services"
+              onClick={() => setMobileOpen(false)}
+              className="px-3 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-surface)]"
+            >
+              {t('services')}
+            </a>
+            <a
+              href="https://mimostrador.com.ar"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+              className="px-3 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-surface)]"
+            >
+              Mi Mostrador
+            </a>
+            <a
+              href="#contact"
+              onClick={() => setMobileOpen(false)}
+              className="px-3 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-surface)]"
+            >
+              {t('contact')}
+            </a>
             <div className="pt-2">
               <a href="#contact" onClick={() => setMobileOpen(false)}>
                 <Button variant="primary" size="sm" className="w-full justify-center">

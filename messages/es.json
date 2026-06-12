@@ -1,7 +1,6 @@
 ﻿{
   "nav": {
     "services": "Servicios",
-    "mostrador": "Mi Mostrador",
     "contact": "Contacto",
     "cta": "Pedir demo"
   },
@@ -34,5 +33,8 @@
       "sitios": {"name": "Sitios web","number": "06","tagline": "Tu presencia digital, sin fricciones.","description": "Diseñamos y desarrollamos landing pages, e-commerce y aplicaciones web a medida. Rápidos, accesibles y optimizados para convertir.","features": ["Landing pages de alta conversión","E-commerce y tiendas online","Integración de bots y automatizaciones","SEO técnico incluido"],"cta": "Ver portfolio"}
     }
   },
-  "cta": {"heading": "Tu negocio no duerme.\nVos sí podés.","subheading": "Empezá en 48 horas. Sin contratos largos. Sin IT interno.","primary": "Hablar con un asesor","secondary": "Ver demo grabada","whatsapp": "Escribir por WhatsApp"}
+  "cta": {
+    "heading": "Tu negocio atendiendo\ncuando vos no podés.",
+    "subheading": "Sin contratar más personal. Sin perder ventas. Con IA que trabaja por vos."
+  }
 }
