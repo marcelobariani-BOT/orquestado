@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useTranslations } from 'next-intl';
 import FadeIn from '@/components/animations/FadeIn';
@@ -72,7 +72,7 @@ export default function FinalCTA() {
             <span className="text-sm text-[var(--text-primary)] font-medium">Orquestado</span>
           </div>
           <p className="text-xs text-[var(--text-tertiary)]">
-            © 2025 Orquestado. Automatización con IA.
+            © {new Date().getFullYear()} Orquestado. Automatización con IA.
           </p>
         </div>
       </div>
