@@ -4,11 +4,16 @@
 // Fuente frame: https://github.com/nolly-studio/cult-ui/blob/main/apps/www/registry/default/ui/texture-card.tsx
 // Adaptados para servicios de Orquesta (dark mode, service data, sin imágenes externas)
 
-import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useState } from 'react';
 import { AnimatePresence, motion, useAnimation, useMotionValue, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Lottie from 'lottie-react';
+import lottieBots from '@/public/lottie/bots.json';
+import lottieLlamadas from '@/public/lottie/llamadas.json';
+import lottieRecepcion from '@/public/lottie/recepcion.json';
+import lottieTurnos from '@/public/lottie/turnos.json';
+import lottieSitios from '@/public/lottie/sitios.json';
 import FadeIn from '@/components/animations/FadeIn';
 import Button from '@/components/ui/Button';
 import PlasmaBallGL from '@/components/ui/PlasmaBallGL';
@@ -162,32 +167,15 @@ function TextureFrame({
   );
 }
 
-// ── Artwork: Lottie para todos excepto mostrador (logo PNG) ──────
-const LOTTIE_MAP: Partial<Record<ServiceKey, string>> = {
-  bots:      '/lottie/bots.json',
-  llamadas:  '/lottie/llamadas.json',
-  recepcion: '/lottie/recepcion.json',
-  turnos:    '/lottie/turnos.json',
-  sitios:    '/lottie/sitios.json',
+// ── Artwork: Lottie importado estáticamente (no fetch) ───────────
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const LOTTIE_MAP: Partial<Record<ServiceKey, any>> = {
+  bots:      lottieBots,
+  llamadas:  lottieLlamadas,
+  recepcion: lottieRecepcion,
+  turnos:    lottieTurnos,
+  sitios:    lottieSitios,
 };
-
-function LottieFromUrl({ src }: { src: string }) {
-  const [data, setData] = useState<object | null>(null);
-  const cache = useRef<Record<string, object>>({});
-
-  useEffect(() => {
-    if (cache.current[src]) { setData(cache.current[src]); return; }
-    fetch(src).then(r => r.json()).then(json => {
-      cache.current[src] = json;
-      setData(json);
-    });
-  }, [src]);
-
-  if (!data) return null;
-  return (
-    <Lottie animationData={data} loop autoplay style={{ width: '100%', height: '100%' }} />
-  );
-}
 
 function ServiceArtwork({ id }: { id: ServiceKey }) {
   if (id === 'mostrador') {
@@ -203,11 +191,11 @@ function ServiceArtwork({ id }: { id: ServiceKey }) {
       </div>
     );
   }
-  const lottieSrc = LOTTIE_MAP[id];
-  if (!lottieSrc) return null;
+  const animationData = LOTTIE_MAP[id];
+  if (!animationData) return null;
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <LottieFromUrl src={lottieSrc} />
+      <Lottie animationData={animationData} loop autoplay style={{ width: '100%', height: '100%' }} />
     </div>
   );
 }
