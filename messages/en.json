@@ -25,12 +25,54 @@
   "gallery": {"eyebrow": "Services","heading": "The stars\nof your room","subheading": "Click a card to explore the service.","placard": "Orquestado Gallery","close": "Close"},
   "services": {
     "items": {
-      "mostrador": {"name": "Mi Mostrador","number": "01","tagline": "Orders and delivery without friction","description": "The order and delivery platform for food and retail businesses. Digital menu, payments, real-time tracking.","features": ["WhatsApp orders","Unified control panel","Delivery integration"],"cta": "See Mi Mostrador"},
-      "bots": {"name": "Web bots","number": "02","tagline": "24/7 support on your site","description": "An AI agent embedded in your website that answers questions, qualifies leads and escalates to human when needed.","features": ["Instant responses","Lead qualification","Human escalation"],"cta": "See Bots"},
-      "llamadas": {"name": "Outbound calls","number": "03","tagline": "Your sales force scales without growing","description": "Automated AI calling campaigns. Reminders, collections, surveys and follow-ups without operators.","features": ["Natural AI voice","Mass campaigns","CRM integrated"],"cta": "See Calls"},
-      "recepcion": {"name": "Call reception","number": "04","tagline": "Never miss a call again","description": "An AI receptionist that answers, classifies and routes incoming calls to the right area or takes an appointment.","features": ["24/7 coverage","Smart routing","Email summary"],"cta": "See Reception"},
-      "turnos": {"name": "Appointment management","number": "05","tagline": "The schedule that runs itself","description": "Your client books by WhatsApp or voice, the system confirms, reminds and cancels. No human intervention.","features": ["Chat and voice bookings","Automatic reminders","Schedule sync"],"cta": "See Appointments"},
-      "sitios": {"name": "Web design","number": "06","tagline": "Your digital presence, frictionless.","description": "We design and develop landing pages, e-commerce and custom web apps. Fast, accessible and conversion-optimized.","features": ["High-conversion landing pages","Online stores and e-commerce","Bot and automation integration","Technical SEO included"],"cta": "See portfolio"}
+      "mostrador": {
+        "name": "Mi Mostrador",
+        "number": "01",
+        "tagline": "Your digital counter, no app or new register needed.",
+        "description": "Your customers scan a QR or enter through your WhatsApp Business link, browse the digital menu and place their full order from their phone. No download needed. Ideal for butchers, bakeries, delis, rotisseries and any neighborhood business that wants to sell more without adding staff at the counter. Smart delivery: configure zones, distances, hours and shipping prices. Also supports counter pickup and advance orders.",
+        "features": ["Digital menu with categories and photos","Orders for pickup or delivery by zone","Integrated payments and automatic confirmation","Works from day one, no new hardware"],
+        "cta": "Try free for 30 days"
+      },
+      "bots": {
+        "name": "Web bots",
+        "number": "02",
+        "tagline": "The repetitive stuff? AI handles it.",
+        "description": "From a bot that tells your club's story or explains your products, to one that recovers lost members or closes sales. It installs on your website, responds with AI trained on your business, captures data in real time and escalates to a human when needed. Everything is logged in a dashboard so your team can take over whenever they want.",
+        "features": ["AI trained on your business content","Real-time data and lead capture","Control panel with conversation history","Human escalation when AI reaches its limits"],
+        "cta": "Let's talk about your bot"
+      },
+      "llamadas": {
+        "name": "Outbound calls",
+        "number": "03",
+        "tagline": "First to call, first to sell.",
+        "description": "Launch mass campaigns of automated calls or SMS: member recovery, birthday greetings, appointment reminders, news updates. And the best part: when the recipient clicks the link in the message, we already know who they are. The conversation starts with their full history, personalized from the very first message.",
+        "features": ["Mass AI calling and SMS campaigns","Recovery of inactive members or customers","Direct sales with AI-assisted consultation and human close","Instant recognition from the sent link","Full history without needing to log in"],
+        "cta": "Let's talk about your campaign"
+      },
+      "recepcion": {
+        "name": "Call reception",
+        "number": "04",
+        "tagline": "No call goes unanswered. Ever.",
+        "description": "When your customer calls, the AI answers instantly. It tells them about your products, services, hours or prices. It schedules appointments, answers frequent questions and when the situation calls for it, routes the call to a human with the full conversation context. No waiting. No missed calls.",
+        "features": ["24/7 coverage without human intervention","Product, service and hours information","Automatic appointment scheduling","Human handoff with full call history"],
+        "cta": "Let's talk about your reception"
+      },
+      "turnos": {
+        "name": "Appointment management",
+        "number": "05",
+        "tagline": "Your team just sees a full calendar.",
+        "description": "Your customer books their appointment whenever they want — by chat or by voice — without talking to anyone on your team. The system checks real-time availability from Google Calendar, confirms the appointment and sends a reminder by email. If they need to cancel or reschedule, they do it themselves.",
+        "features": ["Voice or chat booking without human intervention","Real-time sync with Google Calendar","Automatic confirmation and email reminder","Cancellation and rescheduling without calling"],
+        "cta": "Let's talk about your schedule"
+      },
+      "sitios": {
+        "name": "Web design",
+        "number": "06",
+        "tagline": "Not just a page. Your business selling on its own.",
+        "description": "We design your website, online store or landing page with everything included: integrated AI chatbot, appointment system, product catalog and smart forms. It's your salesperson, receptionist and digital advisor working every day. Mobile-first and fast, built so your customer can buy from their phone without friction.",
+        "features": ["Custom websites, ecommerce and landing pages","Integrated AI support bot","Appointment system and product catalog","Hosting, domain and launch included"],
+        "cta": "Let's talk about your site"
+      }
     }
   },
   "cta": {

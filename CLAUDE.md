@@ -75,3 +75,6 @@ Protocolo obligatorio:
 - `[Suposición]` — completando información faltante
 
 Si más del 50% de una respuesta es `[Suposición]`, decirlo al inicio.
+
+## Backlog
+- [ ] Prueba social en overlays de servicios — agregar datos reales (pedidos procesados, llamadas atendidas) cuando existan

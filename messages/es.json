@@ -25,12 +25,54 @@
   "gallery": {"eyebrow": "Los servicios","heading": "Los protagonistas\nde tu sala","subheading": "Clickeá un cuadro para explorar el servicio.","placard": "Galería Orquestado","close": "Cerrar"},
   "services": {
     "items": {
-      "mostrador": {"name": "Mi Mostrador","number": "01","tagline": "Pedidos y delivery sin fricción","description": "La plataforma de pedidos y delivery para negocios gastronómicos y retail. Menú digital, pagos, seguimiento en tiempo real.","features": ["Pedidos por WhatsApp","Panel de control unificado","Integración con delivery"],"cta": "Ver Mi Mostrador"},
-      "bots": {"name": "Bots para web","number": "02","tagline": "Atención 24/7 en tu sitio","description": "Un agente de IA incrustado en tu web que responde preguntas, califica leads y escala a humano cuando hace falta.","features": ["Respuestas instantáneas","Calificación de leads","Escalado a humano"],"cta": "Ver Bots"},
-      "llamadas": {"name": "Llamadas salientes","number": "03","tagline": "Tu fuerza de ventas escala sin crecer","description": "Campañas de llamadas automáticas con IA. Recordatorios, cobranzas, encuestas y seguimientos sin operadores.","features": ["Voz natural con IA","Campañas masivas","CRM integrado"],"cta": "Ver Llamadas"},
-      "recepcion": {"name": "Recepción de llamadas","number": "04","tagline": "Nunca más un llamado sin atender","description": "Un recepcionista de IA que atiende, clasifica y deriva llamadas entrantes al área correcta o toma un turno.","features": ["Atención 24/7","Derivación inteligente","Resumen por email"],"cta": "Ver Recepción"},
-      "turnos": {"name": "Gestión de turnos","number": "05","tagline": "La agenda que se maneja sola","description": "Tu cliente reserva por WhatsApp o voz, el sistema confirma, recuerda y cancela. Sin intervención humana.","features": ["Reservas por chat y voz","Recordatorios automáticos","Sincronización de agenda"],"cta": "Ver Turnos"},
-      "sitios": {"name": "Sitios web","number": "06","tagline": "Tu presencia digital, sin fricciones.","description": "Diseñamos y desarrollamos landing pages, e-commerce y aplicaciones web a medida. Rápidos, accesibles y optimizados para convertir.","features": ["Landing pages de alta conversión","E-commerce y tiendas online","Integración de bots y automatizaciones","SEO técnico incluido"],"cta": "Ver portfolio"}
+      "mostrador": {
+        "name": "Mi Mostrador",
+        "number": "01",
+        "tagline": "Tu mostrador digital, sin app ni caja nueva.",
+        "description": "Tus clientes escanean un QR o entran por el link de tu WhatsApp Business, eligen del menú digital y hacen su pedido completo desde el celular. Sin descargar nada. Ideal para carnicerías, panaderías, confiterías, rotiserías y cualquier negocio de barrio que quiera vender más sin sumar gente al mostrador. Delivery inteligente: configurás zonas, distancias, horarios y precios de envío. También retiro por mostrador y pedidos anticipados.",
+        "features": ["Menú digital con categorías y fotos","Pedidos para retirar o delivery por zona","Pagos integrados y confirmación automática","Funciona desde el día uno, sin hardware nuevo"],
+        "cta": "Probá gratis 30 días"
+      },
+      "bots": {
+        "name": "Bots para web",
+        "number": "02",
+        "tagline": "Lo repetitivo lo responde la IA.",
+        "description": "Desde un bot que cuenta la historia de tu club o explica tus productos, hasta uno que recupera socios perdidos o cierra ventas. Se instala en tu web, responde con IA entrenada en tu negocio, captura datos en tiempo real y deriva al humano cuando es necesario. Todo queda registrado en un panel para que tu equipo tome el control cuando quiera.",
+        "features": ["IA entrenada con el contenido de tu negocio","Captura de datos y leads en tiempo real","Panel de control con historial de conversaciones","Derivación a humano cuando la IA no alcanza"],
+        "cta": "Hablemos de tu bot"
+      },
+      "llamadas": {
+        "name": "Llamadas salientes",
+        "number": "03",
+        "tagline": "El que llama primero, vende primero.",
+        "description": "Lanzá campañas masivas de llamadas o SMS automatizados: recupero de socios, saludos de cumpleaños, recordatorios de turno, información de novedades. Y lo mejor: cuando el receptor hace clic en el link del mensaje, ya sabemos quién es. La conversación arranca con su historial completo, personalizada desde el primer mensaje.",
+        "features": ["Campañas masivas de llamadas y SMS con IA","Recupero de socios o clientes inactivos","Venta directa con consulta asistida por IA y cierre por humano","Reconocimiento instantáneo desde el link enviado","Historial completo sin necesidad de login"],
+        "cta": "Hablemos de tu campaña"
+      },
+      "recepcion": {
+        "name": "Recepción de llamadas",
+        "number": "04",
+        "tagline": "Ninguna llamada sin atender. Nunca más.",
+        "description": "Cuando tu cliente llama, la IA lo atiende al instante. Le cuenta sobre tus productos, servicios, horarios o precios. Agenda turnos, responde consultas frecuentes y cuando la situación lo requiere, deriva la llamada a un humano con el contexto completo de la conversación. Sin esperas. Sin llamadas perdidas.",
+        "features": ["Atención 24/7 sin intervención humana","Información de productos, servicios y horarios","Agendamiento automático de turnos","Derivación a humano con historial de la llamada"],
+        "cta": "Hablemos de tu recepción"
+      },
+      "turnos": {
+        "name": "Gestión de turnos",
+        "number": "05",
+        "tagline": "Tu equipo solo ve el calendario lleno.",
+        "description": "Tu cliente agenda su turno cuando quiere — por chat o por voz — sin hablar con nadie de tu equipo. El sistema consulta la disponibilidad en tiempo real desde Google Calendar, confirma el turno y envía el recordatorio por mail. Si necesita cancelar o reprogramar, lo hace solo.",
+        "features": ["Agendamiento por voz o chat sin intervención humana","Sincronización en tiempo real con Google Calendar","Confirmación y recordatorio automático por mail","Cancelación y reprogramación sin llamar"],
+        "cta": "Hablemos de tu agenda"
+      },
+      "sitios": {
+        "name": "Sitios web",
+        "number": "06",
+        "tagline": "No es solo una página. Es tu negocio vendiendo solo.",
+        "description": "Diseñamos tu sitio web, tienda online o landing page con todo incluido: bot de atención integrado, sistema de turnos, catálogo de productos y formularios inteligentes. Es tu vendedor, recepcionista y asesor digital trabajando todos los días. Mobile-first y rápido, pensado para que tu cliente compre desde el celular sin trabarse.",
+        "features": ["Sitios web, ecommerce y landings a medida","Bot de atención con IA integrado","Sistema de turnos y catálogo de productos","Hosting, dominio y puesta online incluidos"],
+        "cta": "Hablemos de tu sitio"
+      }
     }
   },
   "cta": {

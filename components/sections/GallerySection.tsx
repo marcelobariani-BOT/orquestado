@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 // Fuente carousel: https://github.com/nolly-studio/cult-ui/blob/main/apps/www/registry/default/ui/three-d-carousel.tsx
 // Fuente frame: https://github.com/nolly-studio/cult-ui/blob/main/apps/www/registry/default/ui/texture-card.tsx
@@ -215,12 +215,12 @@ function ServiceFaceCard({
       <div className="mx-4 h-px" style={{ background: c(0.2) }} />
       <div className="p-4 pb-5">
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-mono text-[10px]" style={{ color: c(0.65) }}>{number}</span>
+          <span className="font-mono text-[10px]" style={{ color: c(0.85) }}>{number}</span>
           <h3 className="text-sm font-bold text-[var(--text-primary)] leading-tight">{name}</h3>
         </div>
-        <p className="text-[10px] leading-snug mt-1" style={{ color: c(0.7) }}>{tagline}</p>
+        <p className="text-[10px] leading-snug mt-1" style={{ color: c(0.95) }}>{tagline}</p>
         <div className="mt-3 flex items-center gap-1">
-          <span className="text-[9px] font-mono tracking-widest" style={{ color: c(0.55) }}>
+          <span className="text-[9px] font-mono tracking-widest" style={{ color: c(0.85) }}>
             VER MÁS →
           </span>
         </div>
@@ -315,7 +315,46 @@ const Carousel = memo((
 });
 Carousel.displayName = 'Carousel';
 
-// ── Overlay expandido ──────────────────────────────────────────
+// -- CTA links por servicio
+const SERVICE_CTA_HREF: Record<ServiceKey, string> = {
+  mostrador: 'https://www.mimostrador.com.ar',
+  bots:      'https://wa.me/541178241554?text=Hola!%20Me%20interesa%20el%20servicio%20de%20Bots%20para%20web.',
+  llamadas:  'https://wa.me/541178241554?text=Hola!%20Me%20interesa%20el%20servicio%20de%20Llamadas%20salientes.',
+  recepcion: 'https://wa.me/541178241554?text=Hola!%20Me%20interesa%20el%20servicio%20de%20Recepci%C3%B3n%20de%20llamadas.',
+  turnos:    'https://wa.me/541178241554?text=Hola!%20Me%20interesa%20el%20servicio%20de%20Gesti%C3%B3n%20de%20turnos.',
+  sitios:    'https://wa.me/541178241554?text=Hola!%20Me%20interesa%20el%20servicio%20de%20Sitios%20web.',
+};
+
+function CtaLink({ id, cta, color }: { id: ServiceKey; cta: string; color: string }) {
+  const href = SERVICE_CTA_HREF[id];
+  const isExternal = id === 'mostrador';
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '10px 20px',
+        borderRadius: '8px',
+        fontWeight: 600,
+        fontSize: '14px',
+        color: '#fff',
+        background: color,
+        textDecoration: 'none',
+        transition: 'opacity 0.2s',
+      }}
+      onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+      onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+    >
+      {cta}{isExternal ? ' ' : ''}
+    </a>
+  );
+}
+
+// -- Overlay expandido
 function ServiceOverlay({
   id, onClose, t,
 }: { id: ServiceKey; onClose: () => void; t: ReturnType<typeof useTranslations> }) {
@@ -387,10 +426,7 @@ function ServiceOverlay({
                 </li>
               ))}
             </ul>
-            <Button variant="primary" size="md"
-              style={{ '--accent-cyan': color } as React.CSSProperties}>
-              {cta}
-            </Button>
+                        <CtaLink id={id} cta={cta} color={color} />
           </div>
         </div>
       </TextureFrame>
