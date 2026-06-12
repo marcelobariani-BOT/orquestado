@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useRef, useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
@@ -28,13 +28,11 @@ function WordsPullUp({ text, className = '' }: { text: string; className?: strin
   );
 }
 
-/* Replica clamp(56px, 12vw, 200px) × proporciones de la "O" */
 function calcPlasmaSize(vw: number): number {
   const fontSize = Math.min(Math.max(vw * 0.12, 56), 200);
   return Math.round(fontSize * 0.88 * 1.05);
 }
 
-/* ── HeroO — la "O" inicial con esfera de plasma adentro ────────── */
 function HeroO() {
   const [plasmaSize, setPlasmaSize] = useState(() =>
     typeof window !== 'undefined' ? calcPlasmaSize(window.innerWidth) : 160
@@ -48,7 +46,6 @@ function HeroO() {
 
   return (
     <span className="inline-block relative" style={{ lineHeight: 'inherit' }}>
-      {/* La "O" — transparente con solo el contorno visible */}
       <span
         style={{
           color: 'transparent',
@@ -60,8 +57,6 @@ function HeroO() {
       >
         O
       </span>
-
-      {/* Plasma centrado sobre la "O" — sin overflow:hidden para que el glow respire */}
       <span
         aria-hidden
         style={{
@@ -141,15 +136,13 @@ export default function HeroSection() {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-wrap items-center gap-3"
               >
-                <Button variant="primary" size="lg">
-                  {t('ctaPrimary')}
-                  <ArrowIcon />
-                </Button>
-                <Button variant="secondary" size="lg">
-                  {t('ctaSecondary')}
-                </Button>
+                <a href="#services">
+                  <Button variant="primary" size="lg">
+                    Explorar servicios
+                    <ArrowIcon />
+                  </Button>
+                </a>
               </motion.div>
             </div>
           </div>

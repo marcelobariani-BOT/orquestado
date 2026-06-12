@@ -46,7 +46,7 @@ export default function FinalCTA() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               {/* Botón WhatsApp con efecto pulse */}
               <a
-                href="https://wa.me/541178241554"
+                href="https://wa.me/541178241554?text=Hola%21%20Vi%20Orquestado%20y%20me%20interesa%20automatizar%20mi%20negocio.%20%C2%BFPodemos%20hablar%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-white text-base"
