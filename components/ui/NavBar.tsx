@@ -41,7 +41,7 @@ export default function NavBar() {
 
           {/* Links desktop */}
           <div className="hidden md:flex items-center gap-1">
-            {(['services', 'howItWorks', 'cases', 'contact'] as const).map((key) => (
+            {(['services', 'mostrador', 'contact'] as const).map((key) => (
               <a
                 key={key}
                 href={`#${key}`}
@@ -54,9 +54,11 @@ export default function NavBar() {
 
           {/* CTA + mobile toggle */}
           <div className="flex items-center gap-3">
-            <Button variant="primary" size="sm" className="hidden md:inline-flex">
-              {t('cta')}
-            </Button>
+            <a href="#contact" className="hidden md:inline-flex">
+              <Button variant="primary" size="sm">
+                {t('cta')}
+              </Button>
+            </a>
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="md:hidden p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
@@ -76,7 +78,7 @@ export default function NavBar() {
             animate={{ opacity: 1, y: 0 }}
             className="md:hidden pb-4 border-t border-[var(--border-subtle)] pt-4 flex flex-col gap-1"
           >
-            {(['services', 'howItWorks', 'cases', 'contact'] as const).map((key) => (
+            {(['services', 'mostrador', 'contact'] as const).map((key) => (
               <a
                 key={key}
                 href={`#${key}`}
@@ -87,9 +89,11 @@ export default function NavBar() {
               </a>
             ))}
             <div className="pt-2">
-              <Button variant="primary" size="sm" className="w-full justify-center">
-                {t('cta')}
-              </Button>
+              <a href="#contact" onClick={() => setMobileOpen(false)}>
+                <Button variant="primary" size="sm" className="w-full justify-center">
+                  {t('cta')}
+                </Button>
+              </a>
             </div>
           </motion.div>
         )}

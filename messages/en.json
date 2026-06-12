@@ -1,8 +1,7 @@
-{
+﻿{
   "nav": {
     "services": "Services",
-    "howItWorks": "How it works",
-    "cases": "Use cases",
+    "mostrador": "Mi Mostrador",
     "contact": "Contact",
     "cta": "Request demo"
   },
@@ -16,102 +15,24 @@
   "room": {
     "buildingLabel": "Building your control room",
     "stages": [
-      {
-        "label": "Order channel",
-        "heading": "Mi Mostrador\nenters the scene",
-        "body": "The platform receives orders from WhatsApp, web and delivery. No calls. No paper."
-      },
-      {
-        "label": "Web support",
-        "heading": "A bot that\nnever rests",
-        "body": "Responds instantly, qualifies leads and escalates to human only when needed."
-      },
-      {
-        "label": "Smart voice",
-        "heading": "Calls that\nmanage themselves",
-        "body": "Automated AI campaigns. Reminders, collections and follow-ups without operators."
-      },
-      {
-        "label": "Call reception",
-        "heading": "Never miss\na call again",
-        "body": "An AI receptionist that answers, classifies and routes incoming calls to the right area."
-      },
-      {
-        "label": "Appointment management",
-        "heading": "The schedule\nthat runs itself",
-        "body": "Bookings by WhatsApp or voice. Automatic confirmation, reminders and cancellations."
-      },
-      {
-        "label": "Digital presence",
-        "heading": "Your website\nthat converts",
-        "body": "Landing pages, e-commerce and integrated automations. Your digital presence working for you."
-      }
+      {"label": "Order channel","heading": "Mi Mostrador\nenters the scene","body": "The platform receives orders from WhatsApp, web and delivery. No calls. No paper."},
+      {"label": "Web support","heading": "A bot that\nnever rests","body": "Responds instantly, qualifies leads and escalates to human only when needed."},
+      {"label": "Smart voice","heading": "Calls that\nmanage themselves","body": "Automated AI campaigns. Reminders, collections and follow-ups without operators."},
+      {"label": "Call reception","heading": "Never miss\na call again","body": "An AI receptionist that answers, classifies and routes incoming calls to the right area."},
+      {"label": "Appointment management","heading": "The schedule\nthat runs itself","body": "Bookings by WhatsApp or voice. Automatic confirmation, reminders and cancellations."},
+      {"label": "Digital presence","heading": "Your website\nthat converts","body": "Landing pages, e-commerce and integrated automations. Your digital presence working for you."}
     ]
   },
-  "gallery": {
-    "eyebrow": "Services",
-    "heading": "The stars\nof your room",
-    "subheading": "Click a card to explore the service.",
-    "placard": "Orquestado Gallery",
-    "close": "Close"
-  },
+  "gallery": {"eyebrow": "Services","heading": "The stars\nof your room","subheading": "Click a card to explore the service.","placard": "Orquestado Gallery","close": "Close"},
   "services": {
     "items": {
-      "mostrador": {
-        "name": "Mi Mostrador",
-        "number": "01",
-        "tagline": "Orders and delivery without friction",
-        "description": "The order and delivery platform for food and retail businesses. Digital menu, payments, real-time tracking.",
-        "features": ["WhatsApp orders", "Unified control panel", "Delivery integration"],
-        "cta": "See Mi Mostrador"
-      },
-      "bots": {
-        "name": "Web bots",
-        "number": "02",
-        "tagline": "24/7 support on your site",
-        "description": "An AI agent embedded in your website that answers questions, qualifies leads and escalates to human when needed.",
-        "features": ["Instant responses", "Lead qualification", "Human escalation"],
-        "cta": "See Bots"
-      },
-      "llamadas": {
-        "name": "Outbound calls",
-        "number": "03",
-        "tagline": "Your sales force scales without growing",
-        "description": "Automated AI calling campaigns. Reminders, collections, surveys and follow-ups without operators.",
-        "features": ["Natural AI voice", "Mass campaigns", "CRM integrated"],
-        "cta": "See Calls"
-      },
-      "recepcion": {
-        "name": "Call reception",
-        "number": "04",
-        "tagline": "Never miss a call again",
-        "description": "An AI receptionist that answers, classifies and routes incoming calls to the right area or takes an appointment.",
-        "features": ["24/7 coverage", "Smart routing", "Email summary"],
-        "cta": "See Reception"
-      },
-      "turnos": {
-        "name": "Appointment management",
-        "number": "05",
-        "tagline": "The schedule that runs itself",
-        "description": "Your client books by WhatsApp or voice, the system confirms, reminds and cancels. No human intervention.",
-        "features": ["Chat and voice bookings", "Automatic reminders", "Schedule sync"],
-        "cta": "See Appointments"
-      },
-      "sitios": {
-        "name": "Web design",
-        "number": "06",
-        "tagline": "Your digital presence, frictionless.",
-        "description": "We design and develop landing pages, e-commerce and custom web apps. Fast, accessible and conversion-optimized.",
-        "features": ["High-conversion landing pages", "Online stores and e-commerce", "Bot and automation integration", "Technical SEO included"],
-        "cta": "See portfolio"
-      }
+      "mostrador": {"name": "Mi Mostrador","number": "01","tagline": "Orders and delivery without friction","description": "The order and delivery platform for food and retail businesses. Digital menu, payments, real-time tracking.","features": ["WhatsApp orders","Unified control panel","Delivery integration"],"cta": "See Mi Mostrador"},
+      "bots": {"name": "Web bots","number": "02","tagline": "24/7 support on your site","description": "An AI agent embedded in your website that answers questions, qualifies leads and escalates to human when needed.","features": ["Instant responses","Lead qualification","Human escalation"],"cta": "See Bots"},
+      "llamadas": {"name": "Outbound calls","number": "03","tagline": "Your sales force scales without growing","description": "Automated AI calling campaigns. Reminders, collections, surveys and follow-ups without operators.","features": ["Natural AI voice","Mass campaigns","CRM integrated"],"cta": "See Calls"},
+      "recepcion": {"name": "Call reception","number": "04","tagline": "Never miss a call again","description": "An AI receptionist that answers, classifies and routes incoming calls to the right area or takes an appointment.","features": ["24/7 coverage","Smart routing","Email summary"],"cta": "See Reception"},
+      "turnos": {"name": "Appointment management","number": "05","tagline": "The schedule that runs itself","description": "Your client books by WhatsApp or voice, the system confirms, reminds and cancels. No human intervention.","features": ["Chat and voice bookings","Automatic reminders","Schedule sync"],"cta": "See Appointments"},
+      "sitios": {"name": "Web design","number": "06","tagline": "Your digital presence, frictionless.","description": "We design and develop landing pages, e-commerce and custom web apps. Fast, accessible and conversion-optimized.","features": ["High-conversion landing pages","Online stores and e-commerce","Bot and automation integration","Technical SEO included"],"cta": "See portfolio"}
     }
   },
-  "cta": {
-    "heading": "Your business never sleeps.\nNow you can.",
-    "subheading": "Start in 48 hours. No long contracts. No internal IT.",
-    "primary": "Talk to an advisor",
-    "secondary": "Watch recorded demo",
-    "whatsapp": "Message on WhatsApp"
-  }
+  "cta": {"heading": "Your business never sleeps.\nNow you can.","subheading": "Start in 48 hours. No long contracts. No internal IT.","primary": "Talk to an advisor","secondary": "Watch recorded demo","whatsapp": "Message on WhatsApp"}
 }
