@@ -208,7 +208,7 @@ function ServiceFaceCard({
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 flex items-center justify-center p-5 pt-6">
-        <div style={{ width: '100%', height: 90 }}>
+        <div style={{ width: '100%', height: 140 }}>
           <ServiceArtwork id={id} />
         </div>
       </div>
