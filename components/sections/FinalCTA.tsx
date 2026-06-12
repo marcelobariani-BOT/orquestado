@@ -46,7 +46,7 @@ export default function FinalCTA() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               {/* Botón WhatsApp con efecto pulse */}
               <a
-                href="https://wa.me/TU_NUMERO"
+                href="https://wa.me/541178241554"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-white text-base"
@@ -59,13 +59,6 @@ export default function FinalCTA() {
                 <span className="relative">Escribir por WhatsApp</span>
               </a>
 
-              {/* Ver demo grabada */}
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-medium border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border-default)] transition-all"
-              >
-                ▶ Ver demo grabada
-              </a>
             </div>
           </FadeIn>
         </div>
