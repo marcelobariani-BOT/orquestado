@@ -8,7 +8,7 @@ import { memo, useEffect, useLayoutEffect, useState } from 'react';
 import { AnimatePresence, motion, useAnimation, useMotionValue, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import Lottie from 'lottie-react';
+import LottiePlayer from '@/components/ui/LottiePlayer';
 import lottieBots from '@/public/lottie/bots.json';
 import lottieLlamadas from '@/public/lottie/llamadas.json';
 import lottieRecepcion from '@/public/lottie/recepcion.json';
@@ -195,7 +195,7 @@ function ServiceArtwork({ id }: { id: ServiceKey }) {
   if (!animationData) return null;
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <Lottie animationData={animationData} loop autoplay style={{ width: '100%', height: '100%' }} />
+      <LottiePlayer animationData={animationData} style={{ width: '100%', height: '100%' }} />
     </div>
   );
 }
