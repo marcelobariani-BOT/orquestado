@@ -35,7 +35,7 @@ export default function NavBar() {
               O
             </span>
             <span className="text-[var(--text-primary)] font-semibold text-sm tracking-tight">
-              Orquesta
+              Orquestado
             </span>
           </a>
 

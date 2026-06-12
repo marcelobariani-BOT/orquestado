@@ -71,10 +71,10 @@ export default function FinalCTA() {
             <span className="w-6 h-6 rounded-lg bg-[var(--accent-cyan)] flex items-center justify-center text-[var(--text-inverse)] text-xs font-bold">
               O
             </span>
-            <span className="text-sm text-[var(--text-tertiary)] font-medium">Orquesta</span>
+            <span className="text-sm text-[var(--text-tertiary)] font-medium">Orquestado</span>
           </div>
           <p className="text-xs text-[var(--text-tertiary)]">
-            © 2025 Orquesta. Automatización con IA.
+            © 2025 Orquestado. Automatización con IA.
           </p>
         </div>
       </div>

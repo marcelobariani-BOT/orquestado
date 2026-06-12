@@ -15,10 +15,10 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Orquesta — Automatización con IA para tu negocio",
+  title: "Orquestado — Automatización con IA para tu negocio",
   description: "Pedidos, bots, llamadas y turnos automatizados con inteligencia artificial. Sin código, sin fricción, en 48 horas.",
   openGraph: {
-    title: "Orquesta — Automatización con IA",
+    title: "Orquestado — Automatización con IA",
     description: "Tu negocio trabaja mientras dormís.",
     type: "website",
   },
