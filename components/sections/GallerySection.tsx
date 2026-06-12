@@ -15,7 +15,7 @@ import lottieRecepcion from '@/public/lottie/recepcion.json';
 import lottieTurnos from '@/public/lottie/turnos.json';
 import lottieSitios from '@/public/lottie/sitios.json';
 import FadeIn from '@/components/animations/FadeIn';
-import Button from '@/components/ui/Button';
+
 import PlasmaBallGL from '@/components/ui/PlasmaBallGL';
 
 // ── useMediaQuery ────────────────────────────────────────────
