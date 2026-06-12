@@ -4,9 +4,11 @@
 // Fuente frame: https://github.com/nolly-studio/cult-ui/blob/main/apps/www/registry/default/ui/texture-card.tsx
 // Adaptados para servicios de Orquesta (dark mode, service data, sin imágenes externas)
 
-import { memo, useEffect, useLayoutEffect, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useAnimation, useMotionValue, useTransform } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import Lottie from 'lottie-react';
 import FadeIn from '@/components/animations/FadeIn';
 import Button from '@/components/ui/Button';
 import PlasmaBallGL from '@/components/ui/PlasmaBallGL';
@@ -160,126 +162,53 @@ function TextureFrame({
   );
 }
 
-// ── Artwork SVG por servicio ───────────────────────────────────
-function ServiceArtwork({ id, color }: { id: ServiceKey; color: string }) {
-  const a = (o: number) => color.replace('1)', `${Math.min(1, o)})`);
-  if (id === 'mostrador') return (
-    <svg viewBox="0 0 120 80" className="w-full h-full">
-      {[0,1,2,3].map(i => <rect key={i} x="8" y={8+i*18} width={55+i*14} height="11" rx="5.5" style={{ fill: i===0 ? color : a(1.0) }} />)}
-      <circle cx="100" cy="40" r="16" style={{ fill: a(0.24), stroke: color, strokeWidth: 1.5 }} />
-      <text x="100" y="45" textAnchor="middle" style={{ fill: color, fontSize: 16, fontFamily: 'sans-serif' }}>✓</text>
-    </svg>
-  );
-  if (id === 'bots') return (
-    /* Ventana de chat: burbujas alternas usuario/bot */
-    <svg viewBox="0 0 120 80" className="w-full h-full">
-      {/* Burbuja bot (izq) */}
-      <rect x="8" y="6" width="62" height="14" rx="7" style={{ fill: a(0.22), stroke: color, strokeWidth: 1 }} />
-      <circle cx="8" cy="13" r="4" style={{ fill: color }} />
-      <rect x="12" y="9" width="28" height="3" rx="1.5" style={{ fill: color, opacity: 0.9 }} />
-      <rect x="12" y="14" width="18" height="3" rx="1.5" style={{ fill: color, opacity: 0.6 }} />
-      {/* Burbuja usuario (der) */}
-      <rect x="50" y="26" width="62" height="14" rx="7" style={{ fill: color, opacity: 0.85 }} />
-      <rect x="56" y="29" width="30" height="3" rx="1.5" style={{ fill: 'oklch(98% 0.005 260)', opacity: 0.9 }} />
-      <rect x="56" y="34" width="20" height="3" rx="1.5" style={{ fill: 'oklch(98% 0.005 260)', opacity: 0.6 }} />
-      {/* Burbuja bot (izq) — escribiendo */}
-      <rect x="8" y="46" width="44" height="14" rx="7" style={{ fill: a(0.22), stroke: color, strokeWidth: 1 }} />
-      <circle cx="8" cy="53" r="4" style={{ fill: color }} />
-      <circle cx="18" cy="53" r="2.2" style={{ fill: color, opacity: 0.5 }} />
-      <circle cx="25" cy="53" r="2.2" style={{ fill: color, opacity: 0.75 }} />
-      <circle cx="32" cy="53" r="2.2" style={{ fill: color }} />
-      {/* Línea de input inferior */}
-      <rect x="8" y="68" width="104" height="8" rx="4" style={{ fill: a(0.12), stroke: color, strokeWidth: 0.8 }} />
-      <rect x="98" y="69.5" width="10" height="5" rx="2.5" style={{ fill: color, opacity: 0.8 }} />
-    </svg>
-  );
-  if (id === 'llamadas') return (
-    /* Teléfono levantado + ondas salientes */
-    <svg viewBox="0 0 120 80" className="w-full h-full">
-      {/* Auricular */}
-      <path d="M28,52 C28,38 36,26 48,22 L52,30 C44,33 40,40 40,52 Z"
-        style={{ fill: color, opacity: 0.9 }} />
-      <path d="M28,52 L22,66 C21,69 24,72 27,71 L40,66 C42,65 42,63 40,62 L36,58 C34,57 34,54 36,53 L40,52 Z"
-        style={{ fill: color }} />
-      <path d="M52,30 L62,24 C65,22 68,24 67,27 L64,40 C63,43 61,43 59,41 L56,37 C54,35 52,35 51,37 L48,42 C46,45 43,44 43,41 L44,36 Z"
-        style={{ fill: color, opacity: 0.85 }} />
-      {/* Ondas salientes */}
-      <path d="M68,28 Q76,36 68,52" fill="none" style={{ stroke: color, strokeWidth: 2, opacity: 0.7, strokeLinecap: 'round' }} />
-      <path d="M76,22 Q90,36 76,58" fill="none" style={{ stroke: color, strokeWidth: 1.5, opacity: 0.45, strokeLinecap: 'round' }} />
-      <path d="M84,16 Q104,36 84,64" fill="none" style={{ stroke: color, strokeWidth: 1, opacity: 0.25, strokeLinecap: 'round' }} />
-    </svg>
-  );
-  if (id === 'recepcion') return (
-    /* Headset de perfil + señal entrante */
-    <svg viewBox="0 0 120 80" className="w-full h-full">
-      {/* Arco del headset */}
-      <path d="M34,42 C34,24 86,24 86,42" fill="none" style={{ stroke: color, strokeWidth: 3.5, strokeLinecap: 'round' }} />
-      {/* Orejera izquierda */}
-      <rect x="28" y="40" width="12" height="18" rx="6" style={{ fill: color, opacity: 0.9 }} />
-      {/* Orejera derecha */}
-      <rect x="80" y="40" width="12" height="18" rx="6" style={{ fill: color, opacity: 0.9 }} />
-      {/* Micrófono */}
-      <line x1="86" y1="55" x2="86" y2="66" style={{ stroke: color, strokeWidth: 2, strokeLinecap: 'round' }} />
-      <rect x="80" y="63" width="12" height="6" rx="3" style={{ fill: a(0.25), stroke: color, strokeWidth: 1 }} />
-      {/* Ondas entrantes (izquierda) */}
-      <path d="M22,36 Q14,42 22,52" fill="none" style={{ stroke: color, strokeWidth: 1.8, opacity: 0.7, strokeLinecap: 'round' }} />
-      <path d="M16,30 Q4,42 16,58" fill="none" style={{ stroke: color, strokeWidth: 1.2, opacity: 0.4, strokeLinecap: 'round' }} />
-      {/* Indicador "respondiendo" */}
-      <circle cx="60" cy="14" r="5" style={{ fill: a(0.2), stroke: color, strokeWidth: 1 }} />
-      <circle cx="60" cy="14" r="2" style={{ fill: color }} />
-    </svg>
-  );
-  if (id === 'sitios') return (
-    <svg viewBox="0 0 120 80" className="w-full h-full">
-      <rect x="6" y="6" width="108" height="68" rx="7" style={{ fill: a(0.16), stroke: color, strokeWidth: 1.5 }} />
-      <rect x="6" y="6" width="108" height="18" rx="7" style={{ fill: a(0.44) }} />
-      <rect x="6" y="18" width="108" height="6" style={{ fill: a(0.24) }} />
-      <circle cx="20" cy="15" r="3.5" style={{ fill: 'rgba(255,95,87,0.9)' }} />
-      <circle cx="31" cy="15" r="3.5" style={{ fill: 'rgba(255,189,46,0.9)' }} />
-      <circle cx="42" cy="15" r="3.5" style={{ fill: 'rgba(40,200,64,0.9)' }} />
-      <rect x="55" y="10" width="48" height="10" rx="5" style={{ fill: a(0.36), stroke: color, strokeWidth: 0.8 }} />
-      <rect x="14" y="32" width="60" height="8" rx="4" style={{ fill: color, opacity: 1 }} />
-      <rect x="14" y="44" width="45" height="6" rx="3" style={{ fill: color, opacity: 1 }} />
-      <rect x="14" y="55" width="28" height="12" rx="6" style={{ fill: color, opacity: 1 }} />
-      <rect x="82" y="30" width="26" height="36" rx="4" style={{ fill: a(0.4), stroke: color, strokeWidth: 1 }} />
-    </svg>
-  );
-  if (id === 'turnos') return (
-    /* Calendario 4×3 con slots reservados + reloj */
-    <svg viewBox="0 0 120 80" className="w-full h-full">
-      {/* Marco calendario */}
-      <rect x="6" y="14" width="78" height="62" rx="5" style={{ fill: a(0.1), stroke: color, strokeWidth: 1.2 }} />
-      {/* Header del calendario */}
-      <rect x="6" y="14" width="78" height="14" rx="5" style={{ fill: a(0.35) }} />
-      <rect x="6" y="22" width="78" height="6" style={{ fill: a(0.35) }} />
-      {/* Pasadores */}
-      <rect x="22" y="10" width="6" height="10" rx="3" style={{ fill: color }} />
-      <rect x="56" y="10" width="6" height="10" rx="3" style={{ fill: color }} />
-      {/* Grilla días: 4 cols × 3 filas */}
-      {[0,1,2,3].map(col => [0,1,2].map(row => {
-        const marked = (col===1&&row===0)||(col===3&&row===0)||(col===0&&row===1)||(col===2&&row===2);
-        return (
-          <rect key={`${col}-${row}`}
-            x={12 + col*17} y={34 + row*13}
-            width="12" height="9" rx="2.5"
-            style={{ fill: marked ? color : a(0.15), opacity: marked ? 1 : 0.9 }}
-          />
-        );
-      }))}
-      {/* Reloj — esquina derecha */}
-      <circle cx="100" cy="38" r="16" style={{ fill: a(0.12), stroke: color, strokeWidth: 1.5 }} />
-      <line x1="100" y1="38" x2="100" y2="27" style={{ stroke: color, strokeWidth: 2, strokeLinecap: 'round' }} />
-      <line x1="100" y1="38" x2="109" y2="42" style={{ stroke: color, strokeWidth: 1.5, strokeLinecap: 'round' }} />
-      <circle cx="100" cy="38" r="2" style={{ fill: color }} />
-    </svg>
-  );
+// ── Artwork: Lottie para todos excepto mostrador (logo PNG) ──────
+const LOTTIE_MAP: Partial<Record<ServiceKey, string>> = {
+  bots:      '/lottie/bots.json',
+  llamadas:  '/lottie/llamadas.json',
+  recepcion: '/lottie/recepcion.json',
+  turnos:    '/lottie/turnos.json',
+  sitios:    '/lottie/sitios.json',
+};
+
+function LottieFromUrl({ src }: { src: string }) {
+  const [data, setData] = useState<object | null>(null);
+  const cache = useRef<Record<string, object>>({});
+
+  useEffect(() => {
+    if (cache.current[src]) { setData(cache.current[src]); return; }
+    fetch(src).then(r => r.json()).then(json => {
+      cache.current[src] = json;
+      setData(json);
+    });
+  }, [src]);
+
+  if (!data) return null;
   return (
-    <svg viewBox="0 0 120 80" className="w-full h-full">
-      {[0,1,2,3].map(row => [0,1,2,3,4].map(col => (
-        <rect key={`${row}-${col}`} x={6+col*24} y={6+row*18} width="18" height="12" rx="3"
-          style={{ fill: (row+col)%3===0 ? color : a(0.5), opacity: (row+col)%3===0 ? 1 : 0.8 }} />
-      )))}
-    </svg>
+    <Lottie animationData={data} loop autoplay style={{ width: '100%', height: '100%' }} />
+  );
+}
+
+function ServiceArtwork({ id }: { id: ServiceKey }) {
+  if (id === 'mostrador') {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <Image
+          src="/images/mimostrador_logo.png"
+          alt="Mi Mostrador"
+          width={100}
+          height={100}
+          style={{ objectFit: 'contain' }}
+        />
+      </div>
+    );
+  }
+  const lottieSrc = LOTTIE_MAP[id];
+  if (!lottieSrc) return null;
+  return (
+    <div className="w-full h-full flex items-center justify-center">
+      <LottieFromUrl src={lottieSrc} />
+    </div>
   );
 }
 
@@ -292,7 +221,7 @@ function ServiceFaceCard({
     <div className="w-full h-full flex flex-col">
       <div className="flex-1 flex items-center justify-center p-5 pt-6">
         <div style={{ width: '100%', height: 90 }}>
-          <ServiceArtwork id={id} color={color} />
+          <ServiceArtwork id={id} />
         </div>
       </div>
       <div className="mx-4 h-px" style={{ background: c(0.2) }} />
@@ -455,7 +384,7 @@ function ServiceOverlay({
             <div className="rounded-lg flex items-center justify-center mb-6"
               style={{ height: 110, background: c(0.07), border: `1px solid ${c(0.2)}` }}>
               <div style={{ width: 220, height: 85 }}>
-                <ServiceArtwork id={id} color={color} />
+                <ServiceArtwork id={id} />
               </div>
             </div>
           </div>
