@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 /**
  * PlasmaBallGL — Plasma Globe de nimitz (ShaderToy XsjXRm)
@@ -215,7 +215,7 @@ export default function PlasmaBallGL({ size = 300, className = '', style }: Plas
 
     const gl = canvas.getContext('webgl2', { alpha: true, antialias: false });
     if (!gl) {
-      console.warn('[PlasmaBallGL] WebGL2 no disponible');
+      if (process.env.NODE_ENV === 'development') console.warn('[PlasmaBallGL] WebGL2 no disponible');
       return;
     }
 
@@ -225,7 +225,7 @@ export default function PlasmaBallGL({ size = 300, className = '', style }: Plas
       gl.shaderSource(sh, src);
       gl.compileShader(sh);
       if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
-        console.error('[PlasmaBallGL] shader error:', gl.getShaderInfoLog(sh));
+        if (process.env.NODE_ENV === 'development') console.error('[PlasmaBallGL] shader error:', gl.getShaderInfoLog(sh));
         return null;
       }
       return sh;
@@ -240,7 +240,7 @@ export default function PlasmaBallGL({ size = 300, className = '', style }: Plas
     gl.attachShader(prog, frag);
     gl.linkProgram(prog);
     if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-      console.error('[PlasmaBallGL] link error:', gl.getProgramInfoLog(prog));
+      if (process.env.NODE_ENV === 'development') console.error('[PlasmaBallGL] link error:', gl.getProgramInfoLog(prog));
       return;
     }
 

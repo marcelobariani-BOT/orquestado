@@ -21,6 +21,14 @@ export const metadata: Metadata = {
     title: "Orquestado — Automatización con IA",
     description: "Tu negocio trabaja mientras dormís.",
     type: "website",
+    url: "https://orquestado.com.ar",
+    siteName: "Orquestado",
+    images: [{ url: "https://orquestado.com.ar/opengraph-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Orquestado — Automatización con IA",
+    description: "Tu negocio trabaja mientras dormís.",
   },
 };
 

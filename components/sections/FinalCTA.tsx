@@ -52,9 +52,9 @@ export default function FinalCTA() {
                 className="relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl font-semibold text-white text-base"
                 style={{ background: '#25D366' }}
               >
-                <span className="absolute inset-0 rounded-2xl animate-ping" style={{ background: '#25D366', opacity: 0.3 }} />
-                <span className="absolute inset-0 rounded-2xl animate-ping" style={{ background: '#25D366', opacity: 0.2, animationDelay: '0.3s' }} />
-                <span className="absolute inset-0 rounded-2xl animate-ping" style={{ background: '#25D366', opacity: 0.1, animationDelay: '0.6s' }} />
+                <span className="absolute inset-0 rounded-2xl animate-ping" style={{ background: '#25D366', opacity: 0.3, animationIterationCount: 3 }} />
+                <span className="absolute inset-0 rounded-2xl animate-ping" style={{ background: '#25D366', opacity: 0.2, animationDelay: '0.3s', animationIterationCount: 3 }} />
+                <span className="absolute inset-0 rounded-2xl animate-ping" style={{ background: '#25D366', opacity: 0.1, animationDelay: '0.6s', animationIterationCount: 3 }} />
                 <WhatsAppIcon />
                 <span className="relative">Escribir por WhatsApp</span>
               </a>

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useTranslations } from 'next-intl';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
@@ -32,7 +32,7 @@ export default function NavBar() {
       <div className="container-orquesta">
         <nav className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <a href="/" className="flex items-center gap-2 group">
             <span className="w-7 h-7 rounded-lg bg-[var(--accent-cyan)] flex items-center justify-center text-[var(--text-inverse)] text-xs font-bold">
               O
             </span>
